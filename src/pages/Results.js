@@ -1,15 +1,16 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import "./Results.css";
 
-function SignUp() {
+function Results() {
   return (
     <div className="container-fluid h-100">
       <div className="row h-100 mx-4">
         <div className="col d-flex flex-column p-0">
           <Header />
           {/* Main Gradient Section Begins */}
-          <main className="h-100 d-flex flex-column justify-content-center align-items-center">
-            Sign Up
+          <main className="light-gradient h-100 d-flex flex-column justify-content-center align-items-center">
+            Results
           </main>
           {/* Main Gradient Section Ends */}
           <Footer />
@@ -19,4 +20,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Results;

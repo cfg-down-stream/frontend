@@ -1,14 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 html, body, #root {
   height: 100%;
 }
 
 body {
-  background: linear-gradient(to right, #829DF6, #AAACED);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #141414;
+  background: #F7F7F7;
+  line-height: 1.4;
 }
 
-.text-blue {
-  color: #1A56FF;
+h1, h2, h3, h4, h5 {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.4;
 }
+
+
+main {
+  background: linear-gradient(to right, rgb(40, 96, 254, 70%), rgb(118, 120, 237, 70%));
+  border-radius: 6px !important;
+}
+
+
+

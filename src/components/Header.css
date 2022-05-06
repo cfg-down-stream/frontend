@@ -1,0 +1,14 @@
+.text-purple {
+    color: #7678ED;
+}
+
+.navbar-brand {
+    color: #0A4AFF !important;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar-toggler {
+    border: none !important;
+    color: #ABABAB !important;
+}
