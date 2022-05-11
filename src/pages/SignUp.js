@@ -15,13 +15,13 @@ function SignUp() {
     <div className="container-fluid h-100">
       <div className="row h-100 mx-4">
         <div className="col d-flex flex-column p-0">
-          <Header />
+          <Header/>
           {/* Main Gradient Section Begins */}
           {/* ask Emily: 1. How to make this page scroll to allow space for form
           2. Ask about the responsiveness of the LogIn form
           3. Ask about hamburger and functionality */}
           <main className="h-100 d-flex flex-column justify-content-center align-items-center">
-            <h3 class="h3 mt-4 p-4" > 
+            <h3 class="h3 mt-4 p-3" > 
               <span className="text-white"> Sign Up </span>
             </h3>
 
