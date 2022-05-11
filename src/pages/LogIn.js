@@ -60,18 +60,14 @@ function LogIn() {
               />
             </div>
 
-             <div >
-                <button 
-                  className="btn"
-                  type="submit" 
-                  disabled= {!login.email && !login.password }
-                  onClick={() => {
-                    // backend
-                  }
-                }
-                >
+            <div >
+              <button 
+                className="log-btn"
+                type="submit" 
+                disabled= {!login.email && !login.password }
+                onClick={() => {{/*Where Backend goes*/}}}> 
                 Log In
-                </button>
+              </button>
             </div>
           </form>
 
