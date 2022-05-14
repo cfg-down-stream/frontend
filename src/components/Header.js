@@ -4,22 +4,21 @@ import "./Header.css";
 function Header() {
   return (
     <header className="sticky-top">
-      <nav className="navbar navbar-light bg-light">
+      <nav className="navbar  navbar-light bg-light">
         <a className="navbar-brand" href="/">
           <span className="text-purple">down</span>
           Stream
         </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" 
+          type="button" 
+          data-toggle="collapse" 
+          data-target="#navbarNav" 
+          aria-controls="navbarNav" 
+          aria-expanded="false" 
+          aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
         </button>
+        
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <Link to="/" className="nav-item text-decoration-none">

@@ -1,0 +1,27 @@
+.display-6 {
+    font-weight: 500;
+}
+#emailHelp{
+    color: #FF235E;
+}
+
+.log-btn{
+    width: 100%;
+    background-color: #7678ED;
+    border-radius: 5px;
+    border-style: hidden; 
+    margin-top: 10px;
+    padding: 10px;
+    color: white;
+    font-weight:500;
+}
+
+.div-form{
+    width: 45%;
+    height: 75%;
+    padding-top: 50px;
+    padding-left: 60px;
+    padding-right: 60px;
+    background-color: #F7F7F7;
+    border-radius: 5px;
+}

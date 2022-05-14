@@ -1,0 +1,25 @@
+.sign-up{
+    width: 45%;
+    height: 100%;
+    padding-top: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
+    margin-bottom: 5%;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.form-select{
+  transition: 0.3s;
+}
+
+.buttn{
+  width: 100%;
+  background-color: #7678ED;
+  border-radius: 5px;
+  border-style: hidden; 
+  margin: 20px 0;
+  padding: 10px;
+  color: white;
+  font-weight:500;
+}
