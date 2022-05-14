@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+import NavDropdown from "../../node_modules/react-bootstrap/NavDropdown";
 import "./Header.css";
 
 function Header() {
+  const hamburgerNavIcon = <i class="bi bi-list"></i>;
+
   return (
     <header className="sticky-top">
       <nav className="navbar  navbar-light bg-light">
@@ -9,35 +12,24 @@ function Header() {
           <span className="text-purple">down</span>
           Stream
         </a>
-        <button class="navbar-toggler" 
-          type="button" 
-          data-toggle="collapse" 
-          data-target="#navbarNav" 
-          aria-controls="navbarNav" 
-          aria-expanded="false" 
-          aria-label="Toggle navigation">
-           <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <Link to="/" className="nav-item text-decoration-none">
-              Home
-            </Link>
-            <Link to="/profile" className="nav-item text-decoration-none">
-              Profile
-            </Link>
-            <Link to="/search" className="nav-item text-decoration-none">
-              Search
-            </Link>
-            <Link to="/signup" className="nav-item text-decoration-none">
-              Sign up
-            </Link>
-            <Link to="/login" className="nav-item text-decoration-none">
-              Log In
-            </Link>
-          </ul>
-        </div>
+
+        <NavDropdown title={hamburgerNavIcon} id="nav-dropdown">
+          <Link to="/" className="dropdown-link">
+            Home
+          </Link>
+          <Link to="/profile" className="dropdown-link">
+            Profile
+          </Link>
+          <Link to="/search" className="dropdown-link">
+            Search
+          </Link>
+          <Link to="/login" className="dropdown-link">
+            Log In
+          </Link>
+          <Link to="/signup" className="dropdown-link">
+            Sign Up
+          </Link>
+        </NavDropdown>
       </nav>
     </header>
   );
