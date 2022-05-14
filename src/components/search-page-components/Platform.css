@@ -1,0 +1,64 @@
+.black-text {
+    color: #141414;
+  }
+
+  .platform-card-container {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+
+  .platform-card-row {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    justify-content: center;
+    padding: 0;
+
+  }
+
+  .platform-card {
+    width: 250px;
+    height: 200px;
+    margin: 30px;
+    background: #F7F7F7;
+    border-radius: 6px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+
+  }
+
+  .platform-card-title {
+      height: 10%;
+      justify-self: flex-end;
+  }
+
+  h4 {
+      font-size: 20px !important;
+  }
+
+.platform-logo {
+    height: 80%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  img {
+
+    width: 60%;
+  }
+
+  .grayscale {
+    filter: grayscale(100%);
+    border: none;
+    color: #141414;
+  }
+ 
+
+
+
+ 
