@@ -10,7 +10,9 @@ function Results() {
           <Header />
           {/* Main Gradient Section Begins */}
           <main className="light-gradient h-100 d-flex flex-column justify-content-center align-items-center">
-            Results
+            1. Return 5 random api search results 2. Take ids from 5 results and
+            run another api call with them 3. Dispaly extra information from
+            second api call
           </main>
           {/* Main Gradient Section Ends */}
           <Footer />

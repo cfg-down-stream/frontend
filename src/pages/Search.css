@@ -1,4 +1,67 @@
 
-.light-gradient {
-    background: linear-gradient(to right, rgb(40, 96, 254, 20%), rgb(118, 120, 237, 20%)) !important;
+.search-h1 {
+    color: #1956FF;
+    font-weight: 600;
+    font-size: 30px !important;
+    text-align: center;
+    margin-top: 8px;
   }
+
+section {
+    width: 100%;
+    margin: 0 auto 60px auto;
+    padding: 35px 0;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+
+  .submit-section {
+    margin-bottom: 0;
+  }
+
+  .btn {
+    font-weight: 500 !important;
+    border-radius: 6px;
+    background-color: #7678ED !important;
+    border-color: #7678ED !important;
+    padding: 0.375rem 3.5rem !important;
+  }
+
+  /* Genre, type and rating lists */
+ul {
+  width: 80%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  text-align: center;
+  list-style: none;
+  padding: 0;   
+}
+
+li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 40px;
+  margin: 30px;
+  background: #F7F7F7;
+  
+  border-radius: 6px;
+}
+
+/* Purple border & image colour */
+.active {
+  filter: none;
+  border: 3px solid #7678ED;
+  color: #7678ED;
+  /* font-weight: 600; */
+}
+
+.default {
+  border: 1px solid #ABABAB;
+}
+
+
+
