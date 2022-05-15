@@ -9,11 +9,13 @@ body {
   color: #141414;
   background: #F7F7F7;
   line-height: 1.4;
+  /* Default font size is 16px */
 }
 
 h1, h2, h3 {
   font-family: 'Poppins', sans-serif;
   line-height: 1.4;
+  font-weight: 600;
 }
 
 

@@ -1,0 +1,22 @@
+.purple-text {
+    color: #7678ED;
+}
+
+.results-h1, .results-h2, .results-h3 {
+    color: #141414;
+}
+
+.results-h1 {
+    font-size: 1.9rem !important;
+    margin-top: 10px;
+}
+
+.results-h2 {
+    font-size: 1.6rem !important;
+}
+
+.results-h3 {
+    font-size: 1.4rem !important;
+    margin-bottom: 20px;
+}
+
