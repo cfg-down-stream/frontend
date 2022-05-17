@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Context } from "../api/Store";
+import { Link, Navigate, Route } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "./Search.css";
@@ -13,7 +14,7 @@ function Search() {
   const [genreSelection, setGenreSelection] = useState([]);
   const [mediaSelection, setMediaSelection] = useState([]);
   const [ratingSelection, setRatingSelection] = useState([]);
-  const [randomIndex, setrandomIndex] = useState([]);
+  const [state, dispatch] = useContext(Context);
 
   // Ids relating to the API data
   const apiPlatformIds = {
@@ -55,56 +56,15 @@ function Search() {
     any: "1,2,3,33,4,5,6,7,8,9,11,21,12,32,13,36,23,14,40,17",
   };
 
-  function getFiveRandomWatchIds(data) {
-    for (let i = 0; i < 5; i++) {
-      randomIndex.push(Math.floor(Math.random() * 250));
-      // console.log(randomIndex);
-    }
-    // Log the watchmode ids of the 5 random shows. This will be used to run another api call on a different url, to recieve more detailed data.
-    const firstResult = data.titles[randomIndex[0]];
-    const secondResult = data.titles[randomIndex[1]];
-    const thirdResult = data.titles[randomIndex[2]];
-    const fourthResult = data.titles[randomIndex[3]];
-    const fifthResult = data.titles[randomIndex[4]];
-    console.log(
-      firstResult,
-      secondResult,
-      thirdResult,
-      fourthResult,
-      fifthResult
-    );
-  }
-
-  function apiCall(sourceIds, genreIds, mediaIds) {
-    console.log(sourceIds, genreIds, mediaIds);
-    const apiKey = "zrVGwEWbj3fSgYJ0llyF8QZOAPbxLTXz1Dgiuj3a";
-    const apiUrl = `https://api.watchmode.com/v1/list-titles/?apiKey=${apiKey}&source_ids=${sourceIds}&types=${mediaIds}&genres=${genreIds}&page=1`;
-
-    fetch(apiUrl)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (json) {
-        let data = json;
-        console.log(data);
-        getFiveRandomWatchIds(data);
-      })
-      .catch((err) => console.error(err));
-  }
-
   // Takes the users platform,genre and media selections and converts them to their api id equivelent
   // Then converts the array to a string that can be inserted into the api url.
   function gatherData() {
     // PLATFORM
-    // Create new array for source ids
     const sourceIdsArray = [];
-    //  Create new array from platformSelection set
     const platformSelectionArray = Array.from(platformSelection);
-    // For each platform in the platformSelectionArray, push the paltform id from the apiPlatformIds object into the sourceIdsArray
     platformSelectionArray.forEach((platform) => {
       sourceIdsArray.push(apiPlatformIds[platform]);
     });
-    // Convert sourceIds array to string
     const sourceIds = sourceIdsArray.toString();
 
     // GENRE
@@ -123,8 +83,13 @@ function Search() {
     });
     const mediaIds = mediaIdsArray.toString();
 
-    // Call api function, passing string variables
-    apiCall(sourceIds, genreIds, mediaIds);
+    // Add all Id strings into an array
+    const allIds = [sourceIds, genreIds, mediaIds];
+
+    // Dispatch to change global state?
+    // Doesn't update unless "submit" button is clicked twice
+    dispatch({ type: "SET_API_STATE", payload: allIds });
+    console.log(state.apiResultsArray);
   }
 
   function handleSubmitClick() {
@@ -136,6 +101,7 @@ function Search() {
       mediaSelection.size > 0
     ) {
       errorMessage.innerHTML = "";
+      // Call gatherData function
       gatherData();
     } else {
       errorMessage.innerHTML =
