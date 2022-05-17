@@ -1,26 +1,44 @@
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "./SignUp.css";
 
 function SignUp() {
-  const [signup, setSignUp] = useState({
-    email: "",
-    date: "",
-    text: "",
-  });
+  
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [userName, setUserName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [country, setCountry] = useState("")
+  const [selectedDate, setSelectedDate] = useState(new Date())
 
+  const [isAgeError, setIsAgeError] = useState(false)
+ 
+  const validateBirthDate = (payload) => {
+    // let birthDate = new Date(payload)
+    let today = new Date()
+  
+    let age = today.getFullYear() - payload.getFullYear();
+    if (age < 16) {
+        setIsAgeError(true)
+    } else {
+        setIsAgeError(false)
+    }
+    setSelectedDate(payload)
+    
+  }
+  
   return (
     <div className="container-fluid h-100">
       <div className="row h-100 mx-4">
         <div className="col d-flex flex-column p-0">
           <Header />
-          {/* Main Gradient Section Begins */}
-          {/* ask Emily: 1. How to make this page scroll to allow space for form
-          2. Ask about the responsiveness of the LogIn form
-          3. Ask about hamburger and functionality */}
           <main className="h-100 d-flex flex-column justify-content-center align-items-center">
-            <h3 class="h3 mt-4 p-3">
+            <h3 className="h3 mt-4 p-3" > 
               <span className="text-white"> Sign Up </span>
             </h3>
 
@@ -28,116 +46,128 @@ function SignUp() {
               <form>
                 <div className="row mt-3 mb-3">
                   <div className="col h6">
-                    <label for="firstname">First Name</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-m"
-                      id="firstname"
+                    <label htmlFor="firstname">First Name</label>
+                    <input 
+                      type="text" 
+                      className="form-control form-control-sm" 
+                      id="firstname" 
                       aria-label="firstname"
                       onChange={(event) => {
-                        const value = event.target.value;
-                        setSignUp({ signup, firstname: value });
+                        setFirstName(event.target.value)
                       }}
                     />
                   </div>
                   <div className="col h6">
-                    <label for="lastname"> Last Name</label>
-                    <input
-                      type="text"
-                      class="form-control form-control-m"
-                      id="lastname"
+                    <label htmlFor="lastname"> Last Name</label>
+                    <input 
+                      type="text" 
+                      className="form-control form-control-sm" 
+                      id="lastname" 
                       aria-label="lastname"
                       onChange={(event) => {
-                        const value = event.target.value;
-                        setSignUp({ signup, lastname: value });
+                        setLastName(event.target.value)
                       }}
                     />
                   </div>
                 </div>
 
-                <div class="mb-3 h6">
-                  <label for="username" class="form-label">
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    id="username"
+                <div className="mb-3 h6">
+                  <label htmlFor="username" className="form-label">Username</label>
+                  <input 
+                    type="text" 
+                    className="form-control form-control-sm" 
+                    id="username" 
                     aria-describedby="usernameHelp"
+                    onChange={(event) => {
+                      setUserName(event.target.value)
+                    }}
                   />
                 </div>
-
-                <div class="mb-3 h6">
-                  <label for="email" class="form-label">
-                    Email address
-                  </label>
-                  <input
-                    type="email"
-                    class="form-control form-control-sm"
-                    id="email"
+                
+                <div className="mb-3 h6">
+                  <label htmlFor="email" className="form-label">Email address</label>
+                  <input 
+                    type="email" 
+                    className="form-control form-control-sm" 
+                    id="email" 
                     aria-describedby="emailHelp"
+                    onChange={(event) => {
+                      setEmail(event.target.value)
+                    }}
                   />
-                </div>
+                </div>              
 
                 <div className="row mt-3 mb-3">
                   <div className="col h6">
-                    <label for="dob"> Date of Birth</label>
-                    <input
-                      type="date"
-                      class="form-control form-control-sm"
-                      id="dob"
-                      aria-label="dob"
+                    <label htmlFor="dob"> Date of Birth</label>
+                    <DatePicker
+                      className="form-control form-control-sm"
+                      selected={selectedDate}
+                      onChange={validateBirthDate}
+                      showMonthDropdown={true}
+                      showYearDropdown={true}
+                      scrollableYearDropdown={true}
+                      yearDropdownItemNumber={100}
                     />
+                    {isAgeError ? <span className="alert">You need to be 16 and above!</span> : null}
                   </div>
+
                   <div className="col h6">
-                    <label for="country"> Country</label>
-                    <select
-                      class="form-select form-select-sm"
+                  <label htmlFor="country">Country</label>
+                    <select 
+                      className="form-select form-select-sm" 
                       aria-label="Default select example"
-                    >
-                      <option selected>--select--</option>
-                      <option value="1">United States of America</option>
-                      <option value="2">Other</option>
+                      onChange={(event) => {
+                        setCountry(event.target.value)
+                      }}>
+                        
+                      <option value="">--select--</option>
+                      <option value="USA">United States of America</option>
+                      <option value="Other">Other</option>
                       {/* can use API for country */}
                     </select>
                   </div>
                 </div>
-
-                <div class="mb-3 h6">
-                  <label for="password" class="form-label">
-                    Password
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    id="password"
+                
+                <div className="mb-3 h6">
+                  <label htmlFor="password" className="form-label">Password</label>
+                  <input 
+                    type="text" 
+                    className="form-control form-control-sm" 
+                    id="password" 
                     aria-describedby="passwordHelp"
+                    onChange={(event) => {
+                      setPassword(event.target.value)
+                    }}
                   />
                 </div>
-
-                <div class="mb-3 h6">
-                  <label for="confirmpassword" class="form-label">
-                    Confirm password
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    id="confirmpassword"
+                
+                <div className="mb-3 h6">
+                  <label htmlFor="confirmpassword" className="form-label">Confirm password</label>
+                  <input 
+                    type="text" 
+                    className="form-control form-control-sm" 
+                    id="confirmpassword" 
                     aria-describedby="confirmpasswordHelp"
+                    onChange={(event) => {
+                      setConfirmPassword(event.target.value)
+                    }}
                   />
-                </div>
-
+                </div> 
+                
                 <div>
                   <button
                     className="buttn"
-                    type="submit"
-                    disabled={!signup.email && !signup.password}
-                    onClick={() => {
-                      {
-                        /*Where Backend goes*/
-                      }
-                    }}
-                  >
+                    type="submit" 
+                    disabled= {!email || 
+                      !password || 
+                      !confirmPassword ||
+                      !userName ||
+                      !firstName ||
+                      !lastName ||
+                      !country
+                     }
+                    onClick={() => {{/*Where Backend goes*/}}}>
                     Sign Up
                   </button>
                 </div>

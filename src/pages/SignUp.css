@@ -23,3 +23,13 @@
   color: white;
   font-weight:500;
 }
+
+.buttn:disabled, .buttn[disabled]{
+  background-color: #b8b9f4;
+}
+
+.alert {
+  font-size: 11px;
+  color: red;
+
+}
