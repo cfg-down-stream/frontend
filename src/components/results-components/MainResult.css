@@ -1,0 +1,88 @@
+.result-card-container {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.result-card {
+    width: 60%;
+    height: auto;
+    margin: 50px auto;
+    background: #FAFAFA;
+    border-radius: 6px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.result-img-container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.result-img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}
+
+.result-details {
+    width: 50%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    text-align: justify;
+    padding: 40px 60px;
+}
+
+.result-links {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.result-links a {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #1956FF;
+    text-decoration: none;
+}
+
+.result-links a:hover {
+    color: #7678ED;
+}
+
+.bi-info-circle {
+    color: #141414;
+}
+
+.bi-heart {
+    font-size: 18px;
+}
+
+.bi-heart:hover {
+    color: #FF235E;
+}
+
+.bi-heart-fill {
+    color: #FF235E;
+    font-size: 18px;
+}
+
+.search-filters {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+
+
+
