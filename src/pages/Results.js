@@ -27,7 +27,7 @@ function Results() {
           <Header />
           {/* Main Gradient Section Begins */}
           <main className="no-gradient h-100 d-flex flex-column justify-content-center align-items-center">
-            <h1>{state.apiData}</h1>
+            <h1>{state.apiIds}</h1>
 
             <MainResult />
             <MoreSuggestions />

@@ -58,7 +58,7 @@ function Search() {
 
   // If the apiData is not null, naviate to the results pagge
   function goToResultsPage() {
-    if (state.apiData) {
+    if (state.apiIds) {
       navigator("/Results");
     }
   }
