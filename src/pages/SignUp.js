@@ -4,17 +4,20 @@ import "react-datepicker/dist/react-datepicker.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "./SignUp.css";
+import Axios, * as axios from "axios";
 
 function SignUp() {
   
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
+  const [name, setName] = useState("")
+  const [surname, setSurname] = useState("")
   const [userName, setUserName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [country, setCountry] = useState("")
   const [selectedDate, setSelectedDate] = useState(new Date())
+
+
 
   const [isAgeError, setIsAgeError] = useState(false)
  
@@ -30,8 +33,23 @@ function SignUp() {
     }
     setSelectedDate(payload)
     
+  };
+
+  const signuppage = () => {
+    console.log("Sign up in progress")
+    axios.post("http://localhost:3000/signup", {
+     name: name,
+     surname: surname,
+     username: userName,
+     email: email,
+     selectedDate: selectedDate,
+     country: country,
+     password: password
+    }).then ((response) => {
+      console.log (response.data);
+    });
   }
-  
+
   return (
     <div className="container-fluid h-100">
       <div className="row h-100 mx-4">
@@ -43,29 +61,29 @@ function SignUp() {
             </h3>
 
             <div className="sign-up">
-              <form>
+            <form onSubmit={(event) => event.preventDefault()}>
                 <div className="row mt-3 mb-3">
                   <div className="col h6">
-                    <label htmlFor="firstname">First Name</label>
+                    <label htmlFor="Name">First Name</label>
                     <input 
                       type="text" 
                       className="form-control form-control-sm" 
-                      id="firstname" 
-                      aria-label="firstname"
+                      id="Name" 
+                      aria-label="Name"
                       onChange={(event) => {
-                        setFirstName(event.target.value)
+                        setName(event.target.value)
                       }}
                     />
                   </div>
                   <div className="col h6">
-                    <label htmlFor="lastname"> Last Name</label>
+                    <label htmlFor="Surname"> Last Name</label>
                     <input 
                       type="text" 
                       className="form-control form-control-sm" 
-                      id="lastname" 
-                      aria-label="lastname"
+                      id="Surname" 
+                      aria-label="Surname"
                       onChange={(event) => {
-                        setLastName(event.target.value)
+                        setSurname(event.target.value)
                       }}
                     />
                   </div>
@@ -156,20 +174,7 @@ function SignUp() {
                 </div> 
                 
                 <div>
-                  <button
-                    className="buttn"
-                    type="submit" 
-                    disabled= {!email || 
-                      !password || 
-                      !confirmPassword ||
-                      !userName ||
-                      !firstName ||
-                      !lastName ||
-                      !country
-                     }
-                    onClick={() => {{/*Where Backend goes*/}}}>
-                    Sign Up
-                  </button>
+                <button type="submit" onClick={signuppage}> Sign Up</button>
                 </div>
               </form>
             </div>
@@ -180,6 +185,6 @@ function SignUp() {
       </div>
     </div>
   );
-}
+};
 
 export default SignUp;

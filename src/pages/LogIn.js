@@ -3,10 +3,23 @@ import "./LogIn.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useState } from "react";
+import Axios, * as axios from "axios";
 
 function LogIn() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  // sets up the connection with the backend
+  const loginpage = () => {
+    console.log("logging in")
+    axios.post("http://localhost:3000/login", {
+     email: email,
+     password: password,
+    }).then ((response) => {
+      console.log (response.data);
+    });
+    
+  };
 
   return (
     <div className="container-fluid h-100">
@@ -20,7 +33,8 @@ function LogIn() {
           </h3> 
           
           <div className="div-form">
-            <form>
+          {/* prevents the form from reloading each time*/}
+          <form onSubmit={(event) => event.preventDefault()}>
               <div className="input-group-sm mb-3 ">
                 <label
                   for="exampleInputEmail1"
@@ -59,16 +73,8 @@ function LogIn() {
               </div>
 
               <div>
-                <button
-                  className="log-btn"
-                  type="submit"
-                  disabled={!email || !password}
-                  onClick={() => {
-                    //for backend
-                  }}
-                >
-                Log In
-                </button>
+              <button type="submit" onClick={loginpage}> Log In</button>
+
               </div>
             </form>
 
