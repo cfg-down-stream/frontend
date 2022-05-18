@@ -1,22 +1,23 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Context } from "../api/Store";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "./Search.css";
 import Platform from "../components/search-page-components/Platform";
 import Genre from "../components/search-page-components/Genre";
 import MediaType from "../components/search-page-components/MediaType";
-import ContentRating from "../components/search-page-components/ContentRating";
 
 function Search() {
   const [platformSelection, setPlatformSelection] = useState([]);
   const [genreSelection, setGenreSelection] = useState([]);
   const [mediaSelection, setMediaSelection] = useState([]);
-  const [ratingSelection, setRatingSelection] = useState([]);
-  const [randomIndex, setrandomIndex] = useState([]);
+  const [randomIndex, setRandomIndex] = useState([]);
+  const [state, dispatch] = useContext(Context);
+  const navigator = useNavigate();
 
   // Ids relating to the API data
-  const apiPlatformIds = {
+  const platformIdsObject = {
     netflix: 203,
     hulu: 157,
     "hbo max": 387,
@@ -25,12 +26,12 @@ function Search() {
     "prime video": 26,
   };
 
-  const apiMediaIds = {
+  const mediaIdsObject = {
     series: "tv_series",
     film: "movie",
   };
 
-  const apiGenreIds = {
+  const genreIdsObject = {
     action: 1,
     // "action and adventure": 39,
     adventure: 2,
@@ -55,28 +56,26 @@ function Search() {
     any: "1,2,3,33,4,5,6,7,8,9,11,21,12,32,13,36,23,14,40,17",
   };
 
-  function getFiveRandomWatchIds(data) {
-    for (let i = 0; i < 5; i++) {
-      randomIndex.push(Math.floor(Math.random() * 250));
-      // console.log(randomIndex);
+  // If the apiData is not null, naviate to the results pagge
+  function goToResultsPage() {
+    if (state.apiData) {
+      navigator("/Results");
     }
-    // Log the watchmode ids of the 5 random shows. This will be used to run another api call on a different url, to recieve more detailed data.
-    const firstResult = data.titles[randomIndex[0]];
-    const secondResult = data.titles[randomIndex[1]];
-    const thirdResult = data.titles[randomIndex[2]];
-    const fourthResult = data.titles[randomIndex[3]];
-    const fifthResult = data.titles[randomIndex[4]];
-    console.log(
-      firstResult,
-      secondResult,
-      thirdResult,
-      fourthResult,
-      fifthResult
-    );
   }
 
+  // Log the global state on every render and call the goToResultsPage
+  useEffect(() => {
+    console.log("Rendering");
+    goToResultsPage();
+  }, [state]);
+
+  // Updte date the global state in the Store
+  function updateGlobalState(fiveRandomTitleIds) {
+    dispatch({ type: "SET_API_STATE", payload: fiveRandomTitleIds });
+  }
+
+  // Call api with user selections
   function apiCall(sourceIds, genreIds, mediaIds) {
-    console.log(sourceIds, genreIds, mediaIds);
     const apiKey = "zrVGwEWbj3fSgYJ0llyF8QZOAPbxLTXz1Dgiuj3a";
     const apiUrl = `https://api.watchmode.com/v1/list-titles/?apiKey=${apiKey}&source_ids=${sourceIds}&types=${mediaIds}&genres=${genreIds}&page=1`;
 
@@ -86,32 +85,44 @@ function Search() {
       })
       .then(function (json) {
         let data = json;
-        console.log(data);
-        getFiveRandomWatchIds(data);
+        return data;
+      })
+      .then(function (data) {
+        // Push 5 random numbers to randomIndex array
+        for (let i = 0; i < 5; i++) {
+          randomIndex.push(Math.floor(Math.random() * 250));
+        }
+        // Use the 5 random numbers in the randomIndex array, to return 5 ids from the api results
+        const fiveRandomTitleIds = [
+          data.titles[randomIndex[0]].id,
+          data.titles[randomIndex[1]].id,
+          data.titles[randomIndex[2]].id,
+          data.titles[randomIndex[3]].id,
+          data.titles[randomIndex[4]].id,
+        ];
+        return fiveRandomTitleIds;
+      })
+      .then(function (fiveRandomTitleIds) {
+        updateGlobalState(fiveRandomTitleIds);
       })
       .catch((err) => console.error(err));
   }
 
-  // Takes the users platform,genre and media selections and converts them to their api id equivelent
-  // Then converts the array to a string that can be inserted into the api url.
-  function gatherData() {
+  // Gather users filter selections
+  function gatherUserSelectionData() {
     // PLATFORM
-    // Create new array for source ids
     const sourceIdsArray = [];
-    //  Create new array from platformSelection set
     const platformSelectionArray = Array.from(platformSelection);
-    // For each platform in the platformSelectionArray, push the paltform id from the apiPlatformIds object into the sourceIdsArray
     platformSelectionArray.forEach((platform) => {
-      sourceIdsArray.push(apiPlatformIds[platform]);
+      sourceIdsArray.push(platformIdsObject[platform]);
     });
-    // Convert sourceIds array to string
     const sourceIds = sourceIdsArray.toString();
 
     // GENRE
     const genreIdsArray = [];
     const genreSelectionArray = Array.from(genreSelection);
     genreSelectionArray.forEach((genre) => {
-      genreIdsArray.push(apiGenreIds[genre]);
+      genreIdsArray.push(genreIdsObject[genre]);
     });
     const genreIds = genreIdsArray.toString();
 
@@ -119,7 +130,7 @@ function Search() {
     const mediaIdsArray = [];
     const mediaSelectionArray = Array.from(mediaSelection);
     mediaSelectionArray.forEach((media) => {
-      mediaIdsArray.push(apiMediaIds[media]);
+      mediaIdsArray.push(mediaIdsObject[media]);
     });
     const mediaIds = mediaIdsArray.toString();
 
@@ -127,16 +138,17 @@ function Search() {
     apiCall(sourceIds, genreIds, mediaIds);
   }
 
+  // Handle submit click
   function handleSubmitClick() {
     const errorMessage = document.querySelector(".error-message");
-
     if (
       platformSelection.size > 0 &&
       genreSelection.size > 0 &&
       mediaSelection.size > 0
     ) {
       errorMessage.innerHTML = "";
-      gatherData();
+      // Call gatherData function
+      gatherUserSelectionData();
     } else {
       errorMessage.innerHTML =
         "Please pick your platform, genre and show type.";
@@ -158,9 +170,6 @@ function Search() {
             />
             <MediaType
               changeMediaSelection={(choice) => setMediaSelection(choice)}
-            />
-            <ContentRating
-              changeRatingSelection={(choice) => setRatingSelection(choice)}
             />
             {/* Creates api url and goes to results page */}
             <section className="submit-section light-gradient">
