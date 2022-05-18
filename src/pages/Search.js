@@ -1,23 +1,23 @@
 import { useState, useEffect, useContext } from "react";
 import { Context } from "../api/Store";
-import { Link, Navigate, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "./Search.css";
 import Platform from "../components/search-page-components/Platform";
 import Genre from "../components/search-page-components/Genre";
 import MediaType from "../components/search-page-components/MediaType";
-import ContentRating from "../components/search-page-components/ContentRating";
 
 function Search() {
   const [platformSelection, setPlatformSelection] = useState([]);
   const [genreSelection, setGenreSelection] = useState([]);
   const [mediaSelection, setMediaSelection] = useState([]);
-  const [ratingSelection, setRatingSelection] = useState([]);
+  const [randomIndex, setRandomIndex] = useState([]);
   const [state, dispatch] = useContext(Context);
+  const navigator = useNavigate();
 
   // Ids relating to the API data
-  const apiPlatformIds = {
+  const platformIdsObject = {
     netflix: 203,
     hulu: 157,
     "hbo max": 387,
@@ -26,12 +26,12 @@ function Search() {
     "prime video": 26,
   };
 
-  const apiMediaIds = {
+  const mediaIdsObject = {
     series: "tv_series",
     film: "movie",
   };
 
-  const apiGenreIds = {
+  const genreIdsObject = {
     action: 1,
     // "action and adventure": 39,
     adventure: 2,
@@ -56,14 +56,65 @@ function Search() {
     any: "1,2,3,33,4,5,6,7,8,9,11,21,12,32,13,36,23,14,40,17",
   };
 
-  // Takes the users platform,genre and media selections and converts them to their api id equivelent
-  // Then converts the array to a string that can be inserted into the api url.
-  function gatherData() {
+  // If the apiData is not null, naviate to the results pagge
+  function goToResultsPage() {
+    if (state.apiData) {
+      navigator("/Results");
+    }
+  }
+
+  // Log the global state on every render and call the goToResultsPage
+  useEffect(() => {
+    console.log("Rendering");
+    goToResultsPage();
+  }, [state]);
+
+  // Updte date the global state in the Store
+  function updateGlobalState(fiveRandomTitleIds) {
+    dispatch({ type: "SET_API_STATE", payload: fiveRandomTitleIds });
+  }
+
+  // Call api with user selections
+  function apiCall(sourceIds, genreIds, mediaIds) {
+    const apiKey = "zrVGwEWbj3fSgYJ0llyF8QZOAPbxLTXz1Dgiuj3a";
+    const apiUrl = `https://api.watchmode.com/v1/list-titles/?apiKey=${apiKey}&source_ids=${sourceIds}&types=${mediaIds}&genres=${genreIds}&page=1`;
+
+    fetch(apiUrl)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (json) {
+        let data = json;
+        return data;
+      })
+      .then(function (data) {
+        // Push 5 random numbers to randomIndex array
+        for (let i = 0; i < 5; i++) {
+          randomIndex.push(Math.floor(Math.random() * 250));
+        }
+        // Use the 5 random numbers in the randomIndex array, to return 5 ids from the api results
+        const fiveRandomTitleIds = [
+          data.titles[randomIndex[0]].id,
+          data.titles[randomIndex[1]].id,
+          data.titles[randomIndex[2]].id,
+          data.titles[randomIndex[3]].id,
+          data.titles[randomIndex[4]].id,
+        ];
+        return fiveRandomTitleIds;
+      })
+      .then(function (fiveRandomTitleIds) {
+        updateGlobalState(fiveRandomTitleIds);
+      })
+      .catch((err) => console.error(err));
+  }
+
+  // Gather users filter selections
+  function gatherUserSelectionData() {
     // PLATFORM
     const sourceIdsArray = [];
     const platformSelectionArray = Array.from(platformSelection);
     platformSelectionArray.forEach((platform) => {
-      sourceIdsArray.push(apiPlatformIds[platform]);
+      sourceIdsArray.push(platformIdsObject[platform]);
     });
     const sourceIds = sourceIdsArray.toString();
 
@@ -71,7 +122,7 @@ function Search() {
     const genreIdsArray = [];
     const genreSelectionArray = Array.from(genreSelection);
     genreSelectionArray.forEach((genre) => {
-      genreIdsArray.push(apiGenreIds[genre]);
+      genreIdsArray.push(genreIdsObject[genre]);
     });
     const genreIds = genreIdsArray.toString();
 
@@ -79,22 +130,17 @@ function Search() {
     const mediaIdsArray = [];
     const mediaSelectionArray = Array.from(mediaSelection);
     mediaSelectionArray.forEach((media) => {
-      mediaIdsArray.push(apiMediaIds[media]);
+      mediaIdsArray.push(mediaIdsObject[media]);
     });
     const mediaIds = mediaIdsArray.toString();
 
-    // Add all Id strings into an array
-    const allIds = [sourceIds, genreIds, mediaIds];
-
-    // Dispatch to change global state?
-    // Doesn't update unless "submit" button is clicked twice
-    dispatch({ type: "SET_API_STATE", payload: allIds });
-    console.log(state.apiResultsArray);
+    // Call api function, passing string variables
+    apiCall(sourceIds, genreIds, mediaIds);
   }
 
+  // Handle submit click
   function handleSubmitClick() {
     const errorMessage = document.querySelector(".error-message");
-
     if (
       platformSelection.size > 0 &&
       genreSelection.size > 0 &&
@@ -102,7 +148,7 @@ function Search() {
     ) {
       errorMessage.innerHTML = "";
       // Call gatherData function
-      gatherData();
+      gatherUserSelectionData();
     } else {
       errorMessage.innerHTML =
         "Please pick your platform, genre and show type.";
@@ -124,9 +170,6 @@ function Search() {
             />
             <MediaType
               changeMediaSelection={(choice) => setMediaSelection(choice)}
-            />
-            <ContentRating
-              changeRatingSelection={(choice) => setRatingSelection(choice)}
             />
             {/* Creates api url and goes to results page */}
             <section className="submit-section light-gradient">

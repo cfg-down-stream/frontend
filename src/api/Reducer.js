@@ -4,7 +4,7 @@ function Reducer(state, action) {
   switch (action.type) {
     case "SET_API_STATE":
       return {
-        apiResultsArray: action.payload,
+        apiData: action.payload,
       };
     default:
       return state;
