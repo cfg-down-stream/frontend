@@ -3,6 +3,7 @@ import Reducer from "./Reducer";
 
 const initialState = {
   apiIds: null,
+  apiSearchIds: null,
 };
 
 function Store({ children }) {

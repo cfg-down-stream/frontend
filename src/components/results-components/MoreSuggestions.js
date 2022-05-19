@@ -1,33 +1,92 @@
-import { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Context } from "../../api/Store";
 import "./MoreSuggestions.css";
-import Placeholder1 from "../../assets/suggestion-placeholder1.jpeg";
-import Placeholder2 from "../../assets/suggestion-placeholder2.jpeg";
-import Placeholder3 from "../../assets/suggestion-placeholder3.jpg";
-import Placeholder4 from "../../assets/suggestion-placeholder4.jpg";
 
 function MoreSuggestions() {
-  const suggestionsObject = {
+  const [state, dispatch] = useContext(Context);
+  const [ready, setReady] = useState({ ready: false });
+  const [suggestions, setSuggestions] = useState({
     one: {
-      title: "You",
-      image: Placeholder1,
-      link: "https://www.google.com/",
+      title: "title",
+      poster: "/",
+      watchLink: "/",
+      imdbId: "id",
     },
     two: {
-      title: "Westworld",
-      image: Placeholder2,
-      link: "https://www.google.com/",
+      title: "title",
+      poster: "/",
+      watchLink: "/",
+      imdbId: "id",
     },
     three: {
-      title: "After Life",
-      image: Placeholder3,
-      link: "https://www.google.com/",
+      title: "title",
+      poster: "/",
+      watchLink: "/",
+      imdbId: "id",
     },
     four: {
-      title: "Succesion",
-      image: Placeholder4,
-      link: "https://www.google.com/",
+      title: "title",
+      poster: "/",
+      watchLink: "/",
+      imdbId: "id",
     },
-  };
+  });
+
+  // Call apiCall() on first render
+  useEffect(() => {
+    apiCall();
+  }, []);
+
+  function updateStates(dataArray) {
+    setSuggestions({
+      one: {
+        title: dataArray[0].title,
+        poster: dataArray[0].poster,
+        watchLink: dataArray[0].sources[0].web_url,
+        imdbId: dataArray[0].imdb_id,
+      },
+      two: {
+        title: dataArray[1].title,
+        poster: dataArray[1].poster,
+        watchLink: dataArray[1].sources[0].web_url,
+        imdbId: dataArray[1].imdb_id,
+      },
+      three: {
+        title: dataArray[2].title,
+        poster: dataArray[2].poster,
+        watchLink: dataArray[2].sources[0].web_url,
+        imdbId: dataArray[2].imdb_id,
+      },
+      four: {
+        title: dataArray[3].title,
+        poster: dataArray[3].poster,
+        watchLink: dataArray[3].sources[0].web_url,
+        imdbId: dataArray[3].imdb_id,
+      },
+    });
+  }
+
+  // Call api with 5 id numbers from the Search.js api call return
+  async function apiCall() {
+    const dataArray = [];
+    state.apiIds.slice(1).map((id) => {
+      const apiKey = "mVpqDEdeq8iq9gaLg6JuzYys8VRQUV6cHzLJmzDm";
+      const apiUrl = `https://api.watchmode.com/v1/title/${id}/details/?apiKey=${apiKey}&append_to_response=sources`;
+      fetch(apiUrl)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (json) {
+          let data = json;
+          dataArray.push(data);
+          return dataArray;
+        })
+        .then(function (dataArray) {
+          updateStates(dataArray);
+        })
+        .catch((err) => console.error(err));
+    });
+  }
 
   function handleHeartClick(event) {
     if (event.currentTarget.classList[1] === "bi-heart") {
@@ -41,6 +100,7 @@ function MoreSuggestions() {
     //   saveToFavourites();
   }
 
+  // if (ready.ready) {
   return (
     <section className="suggestions-section">
       <h3 className="results-h3">More From This Search</h3>
@@ -48,79 +108,115 @@ function MoreSuggestions() {
       <div className="suggestions-container">
         {/* Suggestion One */}
         <div className="suggestion">
+          <a href={suggestions.one.watchLink}>
+            {" "}
+            <h4 className="suggestion-h4 ">{suggestions.one.title}</h4>
+          </a>
           <div className="suggestion-image-container">
-            <a href={suggestionsObject.one.link}>
+            <a href={suggestions.one.watchLink}>
               {" "}
               <img
                 className="suggestion-image"
-                src={suggestionsObject.one.image}
-                alt="/"
+                src={suggestions.one.poster}
+                alt={`${suggestions.one.title} poster`}
               />
             </a>
           </div>
-          <a href="/">
+
+          <div className="suggestion-links">
             {" "}
-            <h4 className="suggestion-h4 ">{suggestionsObject.one.title}</h4>
-          </a>
-          <i class="bi bi-heart" onClick={handleHeartClick}></i>
+            <a href={`https://www.imdb.com/title/${suggestions.one.imdbId}`}>
+              <i class="bi bi-info-circle"></i>
+            </a>
+            <i class="bi bi-heart" onClick={handleHeartClick}></i>
+          </div>
         </div>
         {/* Suggestion Two */}
         <div className="suggestion">
+          <a href={suggestions.two.watchLink}>
+            {" "}
+            <h4 className="suggestion-h4 ">{suggestions.two.title}</h4>
+          </a>
           <div className="suggestion-image-container">
-            <a href={suggestionsObject.two.link}>
+            <a href={suggestions.two.watchLink}>
               {" "}
               <img
                 className="suggestion-image"
-                src={suggestionsObject.two.image}
-                alt="/"
+                src={suggestions.two.poster}
+                alt={`${suggestions.two.title} poster`}
               />
             </a>
           </div>
-          <a href="/">
+
+          <div className="suggestion-links">
             {" "}
-            <h4 className="suggestion-h4 ">{suggestionsObject.two.title}</h4>
-          </a>
-          <i class="bi bi-heart" onClick={handleHeartClick}></i>
+            <a href={`https://www.imdb.com/title/${suggestions.one.imdbId}`}>
+              <i class="bi bi-info-circle"></i>
+            </a>
+            <i class="bi bi-heart" onClick={handleHeartClick}></i>
+          </div>
         </div>
         {/* Suggestion Three */}
         <div className="suggestion">
+          <a href={suggestions.three.watchLink}>
+            {" "}
+            <h4 className="suggestion-h4 ">{suggestions.three.title}</h4>
+          </a>
           <div className="suggestion-image-container">
-            <a href={suggestionsObject.three.link}>
+            <a href={suggestions.three.watchLink}>
               {" "}
               <img
                 className="suggestion-image"
-                src={suggestionsObject.three.image}
-                alt="/"
+                src={suggestions.three.poster}
+                alt={`${suggestions.three.title} poster`}
               />
             </a>
           </div>
-          <a href="/">
+
+          <div className="suggestion-links">
             {" "}
-            <h4 className="suggestion-h4 ">{suggestionsObject.three.title}</h4>
-          </a>
-          <i class="bi bi-heart" onClick={handleHeartClick}></i>
+            <a href={`https://www.imdb.com/title/${suggestions.one.imdbId}`}>
+              <i class="bi bi-info-circle"></i>
+            </a>
+            <i class="bi bi-heart" onClick={handleHeartClick}></i>
+          </div>
         </div>
         {/* Suggestion Four */}
         <div className="suggestion">
+          <a href={suggestions.four.watchLink}>
+            {" "}
+            <h4 className="suggestion-h4 ">{suggestions.four.title}</h4>
+          </a>
           <div className="suggestion-image-container">
-            <a href={suggestionsObject.four.link}>
+            <a href={suggestions.four.watchLink}>
               {" "}
               <img
                 className="suggestion-image"
-                src={suggestionsObject.four.image}
-                alt="/"
+                src={suggestions.four.poster}
+                alt={`${suggestions.four.title} poster`}
               />
             </a>
           </div>
-          <a href="/">
+
+          <div className="suggestion-links">
             {" "}
-            <h4 className="suggestion-h4 ">{suggestionsObject.four.title}</h4>
-          </a>
-          <i class="bi bi-heart" onClick={handleHeartClick}></i>
+            <a href={`https://www.imdb.com/title/${suggestions.one.imdbId}`}>
+              <i class="bi bi-info-circle"></i>
+            </a>
+            <i class="bi bi-heart" onClick={handleHeartClick}></i>
+          </div>
         </div>
       </div>
     </section>
   );
+  // } else {
+  //   return (
+  //     <section className="suggestions-section">
+  //       <h3 className="results-h3">More From This Search</h3>
+  //       Loader Here
+  //     </section>
+  //   );
+  // }
 }
 
 export default MoreSuggestions;
