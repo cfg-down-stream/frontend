@@ -3,6 +3,9 @@ import Footer from "../components/Footer";
 import "./Profile.css";
 
 function Profile() {
+
+  
+
   return (
     <div className="container-fluid h-100">
       <div className="row h-100 mx-4">
@@ -10,7 +13,9 @@ function Profile() {
           <Header />
           {/* Main Gradient Section Begins */}
           <main className="light-gradient h-100 d-flex flex-column justify-content-center align-items-center">
-            Profile
+          <h3 className="h3 mb-4" > 
+            <span className="text-blue"> localStorage.getItem('user', JSON.stringify(name)); favourites </span>
+          </h3> 
           </main>
           {/* Main Gradient Section Ends */}
           <Footer />

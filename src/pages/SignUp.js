@@ -17,6 +17,8 @@ function SignUp() {
   const [country, setCountry] = useState("")
   const [selectedDate, setSelectedDate] = useState(new Date())
 
+  // username already taken
+  //const [signuperror, setSignupError]= useState("")
 
 
   const [isAgeError, setIsAgeError] = useState(false)
@@ -46,7 +48,9 @@ function SignUp() {
      country: country,
      password: password
     }).then ((response) => {
-      console.log (response.data);
+      console.log (response.data); 
+      //swap this out withif(response.data.message.length >0) {
+        //setLoginErorr(response.data.message)
     });
   }
 
@@ -175,6 +179,7 @@ function SignUp() {
                 
                 <div>
                 <button type="submit" onClick={signuppage}> Sign Up</button>
+                {/* <h1>{signuperror}</h1> */}
                 </div>
               </form>
             </div>

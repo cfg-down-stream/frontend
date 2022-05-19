@@ -8,15 +8,21 @@ import Axios, * as axios from "axios";
 function LogIn() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
+  
+  const [LoginError, setLoginErorr] = useState("")
+  
   // sets up the connection with the backend
   const loginpage = () => {
     console.log("logging in")
     axios.post("http://localhost:3000/login", {
-     email: email,
-     password: password,
+      email: email,
+      password: password,
+      //checks to see if there is a message from the backend, if so diplays it 
     }).then ((response) => {
-      console.log (response.data);
+      if(response.data.message.length >0) {
+        setLoginErorr(response.data.message)
+      }
+      
     });
     
   };
@@ -52,7 +58,7 @@ function LogIn() {
                   }}
                 />
                 <div id="emailHelp" className="form-text">
-                  Error message text
+                  <h1>{LoginError}</h1>
                 </div>
               </div>
 
@@ -74,7 +80,6 @@ function LogIn() {
 
               <div>
               <button type="submit" onClick={loginpage}> Log In</button>
-
               </div>
             </form>
 
