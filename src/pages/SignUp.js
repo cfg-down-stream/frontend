@@ -178,8 +178,18 @@ function SignUp() {
                 </div> 
                 
                 <div>
-                <button type="submit" onClick={signuppage}> Sign Up</button>
-                {/* <h1>{signuperror}</h1> */}
+                <button
+                   type="submit" 
+                   className="buttn"
+                   disabled= {!email || 
+                    !password || 
+                    !confirmPassword ||
+                    !userName ||
+                    !name ||
+                    !surname ||
+                    !country
+                   }
+                   onClick={signuppage}> Sign Up</button>
                 </div>
               </form>
             </div>

@@ -79,7 +79,12 @@ function LogIn() {
               </div>
 
               <div>
-              <button type="submit" onClick={loginpage}> Log In</button>
+              <button 
+                className="log-btn"
+                type="submit" 
+                disabled={!email || !password}
+                onClick={loginpage}> Log In</button>
+
               </div>
             </form>
 
