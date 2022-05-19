@@ -56,27 +56,27 @@ function Search() {
     any: "1,2,3,33,4,5,6,7,8,9,11,21,12,32,13,36,23,14,40,17",
   };
 
-  // If the apiData is not null, naviate to the results pagge
+  // If the apiData global state is not null, naviate to the results page
   function goToResultsPage() {
     if (state.apiIds) {
       navigator("/Results");
     }
   }
 
-  // Log the global state on every render and call the goToResultsPage
+  // Log "rendering" everytime the state renders and call goToResultsPage
   useEffect(() => {
     console.log("Rendering");
     goToResultsPage();
   }, [state]);
 
-  // Updte date the global state in the Store
+  // Update the global state in the Store
   function updateGlobalState(fiveRandomTitleIds) {
-    dispatch({ type: "SET_API_STATE", payload: fiveRandomTitleIds });
+    dispatch({ type: "SET_API_IDS_STATE", payload: fiveRandomTitleIds });
   }
 
   // Call api with user selections
   function apiCall(sourceIds, genreIds, mediaIds) {
-    const apiKey = "zrVGwEWbj3fSgYJ0llyF8QZOAPbxLTXz1Dgiuj3a";
+    const apiKey = "mVpqDEdeq8iq9gaLg6JuzYys8VRQUV6cHzLJmzDm";
     const apiUrl = `https://api.watchmode.com/v1/list-titles/?apiKey=${apiKey}&source_ids=${sourceIds}&types=${mediaIds}&genres=${genreIds}&page=1`;
 
     fetch(apiUrl)
@@ -88,19 +88,23 @@ function Search() {
         return data;
       })
       .then(function (data) {
-        // Push 5 random numbers to randomIndex array
-        for (let i = 0; i < 5; i++) {
-          randomIndex.push(Math.floor(Math.random() * 250));
+        // If data object length is less than 4 go to error page
+        if (Object.keys(data).length < 4) {
+          console.log(`object length: ${Object.keys(data).length}`);
+          navigator("/Error");
+        } else {
+          // Push 5 random numbers to randomIndex array
+          for (let i = 0; i < 5; i++) {
+            randomIndex.push(Math.floor(Math.random() * 250));
+          }
+
+          const fiveRandomTitleIds = [];
+          // For each randomIndex, use it to find show/film ids in the api, then push to the fiveRandomTitleIds array
+          randomIndex.map((index) => {
+            fiveRandomTitleIds.push(data.titles[index].id);
+          });
+          return fiveRandomTitleIds;
         }
-        // Use the 5 random numbers in the randomIndex array, to return 5 ids from the api results
-        const fiveRandomTitleIds = [
-          data.titles[randomIndex[0]].id,
-          data.titles[randomIndex[1]].id,
-          data.titles[randomIndex[2]].id,
-          data.titles[randomIndex[3]].id,
-          data.titles[randomIndex[4]].id,
-        ];
-        return fiveRandomTitleIds;
       })
       .then(function (fiveRandomTitleIds) {
         updateGlobalState(fiveRandomTitleIds);

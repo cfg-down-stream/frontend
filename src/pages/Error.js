@@ -11,7 +11,7 @@ function Error() {
           {/* Main Gradient Section Begins */}
           <main className="light-gradient h-100 d-flex flex-column justify-content-center align-items-center">
             <i class="bi bi-emoji-frown"></i>
-            <h1 className="error-message w-50 text-center">
+            <h1 className="error-page-message w-50 text-center">
               Sorry. We couldn’t find any{" "}
               <span className="text-black">type</span> on{" "}
               <span className="text-black">platform</span> that matched your

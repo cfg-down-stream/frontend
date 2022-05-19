@@ -9,7 +9,7 @@
 }
 
 .result-card {
-    width: 60%;
+    width: 70%;
     height: auto;
     margin: 50px auto;
     background: #FAFAFA;
@@ -28,11 +28,11 @@
     border-bottom-right-radius: 6px;
 }
 
-.result-img {
-    flex-shrink: 0;
-    min-width: 100%;
-    min-height: 100%
+.result-img-container img {
+    height: 100%;
+    width: auto;
 }
+
 
 .result-details {
     width: 50%;
@@ -42,6 +42,18 @@
     align-items: center;
     text-align: justify;
     padding: 40px 60px;
+}
+
+.result-details a {
+    text-decoration: none;
+}
+
+.plot-overview {
+    width: 100%;
+}
+
+.result-links a:hover {
+    color: #7678ED;
 }
 
 .result-links {
@@ -82,6 +94,9 @@
 .search-filters {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 15px;
 }
 
 

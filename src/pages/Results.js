@@ -12,7 +12,6 @@ import "./Results.css";
 // 3. Dispaly extra information from second api call
 
 function Results() {
-  const [randomIndex, setrandomIndex] = useState([]);
   const [state, dispatch] = useContext(Context);
 
   // Scroll to the top of this page when mounted
@@ -27,8 +26,6 @@ function Results() {
           <Header />
           {/* Main Gradient Section Begins */}
           <main className="no-gradient h-100 d-flex flex-column justify-content-center align-items-center">
-            <h1>{state.apiIds}</h1>
-
             <MainResult />
             <MoreSuggestions />
           </main>
