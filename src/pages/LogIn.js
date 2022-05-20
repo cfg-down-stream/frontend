@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import "./LogIn.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import React, { Component, useState } from "react";
 import Axios, * as axios from "axios";
+
 
 function LogIn() {
   const [email, setEmail] = useState("")
@@ -26,6 +27,9 @@ function LogIn() {
     });
     
   };
+
+
+  
 
   return (
     <div className="container-fluid h-100">
