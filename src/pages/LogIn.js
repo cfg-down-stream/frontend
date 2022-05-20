@@ -21,6 +21,8 @@ function LogIn() {
     }).then ((response) => {
       if(response.data.message.length >0) {
         setLoginErorr(response.data.message)
+      } else {
+        setLoginErorr(response.data[0].username)
       }
       
     });
@@ -43,7 +45,7 @@ function LogIn() {
           <form onSubmit={(event) => event.preventDefault()}>
               <div className="input-group-sm mb-3 ">
                 <label
-                  for="exampleInputEmail1"
+                  htmlFor="exampleInputEmail1"
                   className="col-form-label-m h6"
                 >
                 Email address
@@ -57,14 +59,11 @@ function LogIn() {
                    setEmail(event.target.value)
                   }}
                 />
-                <div id="emailHelp" className="form-text">
-                  <h1>{LoginError}</h1>
-                </div>
               </div>
 
               <div className="input-group-sm mb-4">
                 <label
-                  for="exampleInputPassword1"
+                  htmlFor="exampleInputPassword1"
                   className="col-form-label-m h6"
                 >
                 Password
@@ -78,6 +77,9 @@ function LogIn() {
                 />
               </div>
 
+              <div id="emailHelp" className="h6">
+                  <h6>{LoginError}</h6>
+                </div>
               <div>
               <button 
                 className="log-btn"
