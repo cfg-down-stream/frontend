@@ -14,7 +14,6 @@ function Profile() {
           {/* Main Gradient Section Begins */}
           <main className="light-gradient h-100 d-flex flex-column justify-content-center align-items-center">
           <h3 className="h3 mb-4" > 
-            <span className="text-blue"> localStorage.getItem('user', JSON.stringify(name)); favourites </span>
           </h3> 
           </main>
           {/* Main Gradient Section Ends */}
