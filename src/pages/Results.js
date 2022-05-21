@@ -1,19 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../api/Store";
+import React, { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import MainResult from "../components/results-components/MainResult";
 import MoreSuggestions from "../components/results-components/MoreSuggestions";
 import "./Results.css";
 
-// To Do
-// 1. Return 5 random api search results
-// 2. Take ids from 5 results and run another api call with them
-// 3. Dispaly extra information from second api call
-
 function Results() {
-  const [state, dispatch] = useContext(Context);
-
   // Scroll to the top of this page when mounted
   useEffect(() => {
     window.scrollTo(0, 0);

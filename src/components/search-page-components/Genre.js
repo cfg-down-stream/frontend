@@ -34,8 +34,10 @@ function Genre(props) {
     </li>
   ));
 
-  // Add purple border and text colour to clicked list item
-  function handleFilter(event) {
+  /* HANDLE FILTER FUNCTION
+  When clicked - add purple border and change text to purple
+  When "unclicked" - remove purple border and change text back
+*/ function handleFilter(event) {
     if (event.currentTarget.classList[0] === "default-border") {
       event.currentTarget.classList.remove("default-border");
       event.currentTarget.classList.add("active");
@@ -45,11 +47,13 @@ function Genre(props) {
     }
   }
 
-  // Add genre to the selection set, call handleFilter(), and push set to Search.js component
+  /* HANDLE MEDIA CLICK FUNCTION */
   function handleGenreClick(event) {
+    // Add genre to genreSelection set
     const genre = event.currentTarget.textContent.toLowerCase();
     genreSelection.add(genre);
-    // Remove genre item from set if it is unselected
+
+    // Remove genre from genreSelection set if it is unclicked
     if (
       event.currentTarget.classList[0] === "active" &&
       genreSelection.size > 0
@@ -58,7 +62,7 @@ function Genre(props) {
     }
     console.log(genreSelection);
 
-    // Push genreSelection set to Search component
+    // Push genreSelection set to the Search.js (parent) component through the parent's changePlatformChoice function
     props.changeGenreSelection(genreSelection);
     handleFilter(event);
   }

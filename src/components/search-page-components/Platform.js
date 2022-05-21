@@ -8,11 +8,14 @@ import Apple from "../../assets/apple-logo.png";
 import HBO from "../../assets/hbo-logo.png";
 
 function Platform(props) {
-  // Set username state
+  /* SET STATES */
   const [username, setUsername] = useState("Stranger");
   const [platformSelection, setPlatformSelection] = useState(new Set());
 
-  // Remove greyscale, add purple border, change text colour to purple.
+  /* HANDLE FILTER FUNCTION
+  When clicked - remove greyscale, add purple border, change text colour to purple.
+  When "unclicked" - do the reverse
+*/
   function handleFilter(event) {
     if (event.currentTarget.classList[1] === "grayscale") {
       event.currentTarget.classList.remove("grayscale");
@@ -23,12 +26,13 @@ function Platform(props) {
     }
   }
 
-  // Add platform name to the selection set, call handleFilter(), and push set to Search.js component
+  /* HANDLE PLATFORM CLICK FUNCTION*/
   const handlePlatformClick = (value) => (event) => {
+    // Add platform to platformSelection
     const platform = event.currentTarget.textContent.toLowerCase();
     platformSelection.add(platform);
 
-    // Remove platform item from platformSelection set if it is unselected
+    // Remove platform from platformSelection set if it is unclicked
     if (
       event.currentTarget.classList[1] === "active" &&
       platformSelection.size > 0
@@ -37,9 +41,10 @@ function Platform(props) {
     }
     console.log(platformSelection);
 
-    // Push platformSelection set to the Search (parent) component through the parents changePlatformChoice function
+    // Push platformSelection set to the Search.js (parent) component through the parent's changePlatformChoice function
     props.changePlatformSelection(platformSelection);
 
+    // Call handleFilter function
     handleFilter(event);
   };
 

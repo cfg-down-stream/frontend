@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Context } from "../api/Store";
+import { Context } from "../store/Store";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -13,8 +13,86 @@ function Search() {
   const [genreSelection, setGenreSelection] = useState([]);
   const [mediaSelection, setMediaSelection] = useState([]);
   const [randomIndex, setRandomIndex] = useState([]);
+  const [searchIds, setSearchIds] = useState(null);
   const [state, dispatch] = useContext(Context);
   const navigator = useNavigate();
+
+  /* USE EFFECT */
+  useEffect(() => {
+    // Log "Rendering" everytime the state renders and call goToResultsPage
+    console.log("Rendering");
+    // If the two global states are not null (have been set in updateGlobalState functions), call the goToResultPage function
+    // Else call the handleSubmitClick function
+    if (state.apiIds && state.apiSearchIds) {
+      console.log(`Global states: ${state.apiIds} + ${state.apiSearchIds}`);
+      goToResultsPage();
+    } else {
+      // handleSubmit will call on the first render, and then after the user clicks submit
+      // Ff the global states aren't updated on the first suer click, useEffect will call handleSubmitClick again
+      handleSubmitClick();
+    }
+  }, [state]);
+
+  /* GO TO RESULTS PAGE FUNCTION
+   If the global states are not null, naviate to the results page
+  */
+  function goToResultsPage() {
+    if (state.apiIds && state.apiSearchIds) {
+      console.log("both states ready");
+      navigator("/Results");
+    }
+  }
+
+  /* UPDATE GLOBAL STATE FUNCTION
+  1. Send fiveTitleIds and searchIds to the global store
+  */
+  async function updateGlobalState(fiveRandomTitleIds) {
+    await dispatch({ type: "SET_API_IDS_STATE", payload: fiveRandomTitleIds });
+    await dispatch({ type: "SET_SEARCH_IDS_STATE", payload: searchIds });
+  }
+
+  /* API CALL FUNCTION
+  1. Call api with user selections
+  2. Return 5 random show/film ids
+  3. Call the updateGlobalState function */
+  function apiCall(sourceIds, genreIds, mediaIds) {
+    const apiKey = "FXxG27lVwTVEVSaNjkSKL6rMVoa6eVXb5W0fjHuc";
+    const apiUrl = `https://api.watchmode.com/v1/list-titles/?apiKey=${apiKey}&source_ids=${sourceIds}&types=${mediaIds}&genres=${genreIds}&page=1`;
+
+    // Fetch api
+    fetch(apiUrl)
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        let data = json;
+        return data;
+      })
+      .then((data) => {
+        // If data object length is less than 4, go to error page
+        if (Object.keys(data).length < 4) {
+          console.log(`Api Data Length: ${Object.keys(data).length}`);
+          navigator("/Error");
+        } else {
+          // Else, push 5 random numbers to randomIndex array
+          for (let i = 0; i < 5; i++) {
+            randomIndex.push(Math.floor(Math.random() * 250));
+          }
+
+          // For each randomIndex, use it to find show/film ids in the api, then push to fiveRandomTitleIds
+          const fiveRandomTitleIds = randomIndex.map((index) => {
+            return data.titles[index].id;
+          });
+          console.log("5 Random Ids: " + fiveRandomTitleIds);
+          return fiveRandomTitleIds;
+        }
+      })
+      .then((fiveRandomTitleIds) => {
+        // Call updateGlobalState with fiveRandomTitleIds as an argument
+        updateGlobalState(fiveRandomTitleIds);
+      })
+      .catch((err) => console.error(err));
+  }
 
   // Ids relating to the API data
   const platformIdsObject = {
@@ -56,70 +134,25 @@ function Search() {
     any: "1,2,3,33,4,5,6,7,8,9,11,21,12,32,13,36,23,14,40,17",
   };
 
-  // If the apiData global state is not null, naviate to the results page
-  function goToResultsPage() {
-    if (state.apiIds) {
-      navigator("/Results");
-    }
-  }
-
-  // Log "rendering" everytime the state renders and call goToResultsPage
-  useEffect(() => {
-    console.log("Rendering");
-    goToResultsPage();
-  }, [state]);
-
-  // Update the global state in the Store
-  function updateGlobalState(fiveRandomTitleIds) {
-    dispatch({ type: "SET_API_IDS_STATE", payload: fiveRandomTitleIds });
-  }
-
-  // Call api with user selections
-  function apiCall(sourceIds, genreIds, mediaIds) {
-    const apiKey = "mVpqDEdeq8iq9gaLg6JuzYys8VRQUV6cHzLJmzDm";
-    const apiUrl = `https://api.watchmode.com/v1/list-titles/?apiKey=${apiKey}&source_ids=${sourceIds}&types=${mediaIds}&genres=${genreIds}&page=1`;
-
-    fetch(apiUrl)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (json) {
-        let data = json;
-        return data;
-      })
-      .then(function (data) {
-        // If data object length is less than 4 go to error page
-        if (Object.keys(data).length < 4) {
-          console.log(`object length: ${Object.keys(data).length}`);
-          navigator("/Error");
-        } else {
-          // Push 5 random numbers to randomIndex array
-          for (let i = 0; i < 5; i++) {
-            randomIndex.push(Math.floor(Math.random() * 250));
-          }
-
-          const fiveRandomTitleIds = [];
-          // For each randomIndex, use it to find show/film ids in the api, then push to the fiveRandomTitleIds array
-          randomIndex.map((index) => {
-            fiveRandomTitleIds.push(data.titles[index].id);
-          });
-          return fiveRandomTitleIds;
-        }
-      })
-      .then(function (fiveRandomTitleIds) {
-        updateGlobalState(fiveRandomTitleIds);
-      })
-      .catch((err) => console.error(err));
-  }
-
-  // Gather users filter selections
+  /* GATHER USER SELECTION DATA FUNCTION
+   1. Gather users selections
+   2. Get the id equivelent of each selection from the objects above
+   3. Convert id array to string
+   4. Call the apiCall function with the id strings as arguments
+    */
   function gatherUserSelectionData() {
-    // PLATFORM
+    // PLATFORM/SOURCE
     const sourceIdsArray = [];
+
+    // Convert the platformSelection set from the Platform.js child into an array
     const platformSelectionArray = Array.from(platformSelection);
+
+    // For each platform in the platformSelectionArray, find the id in the platformIdsObject, then push the id to the  sourceIdsArray
     platformSelectionArray.forEach((platform) => {
       sourceIdsArray.push(platformIdsObject[platform]);
     });
+
+    // Convert the sourceIdsArray to a string
     const sourceIds = sourceIdsArray.toString();
 
     // GENRE
@@ -138,20 +171,25 @@ function Search() {
     });
     const mediaIds = mediaIdsArray.toString();
 
-    // Call api function, passing string variables
+    // Set the searchIds state with the Ids array, so that it can be made into a global state and used for some details in the Results page
+    setSearchIds([sourceIdsArray, genreIdsArray, mediaIdsArray]);
+    console.log(`search id state: ${searchIds}`);
+
+    // Call apiCall function, passing the id string variables
     apiCall(sourceIds, genreIds, mediaIds);
   }
 
-  // Handle submit click
+  /* HANDLE SUBMIT CLICK FUNCTION */
   function handleSubmitClick() {
     const errorMessage = document.querySelector(".error-message");
+    // If the user has chosen a platform, genre, and media call the gatherUserSelectionFunctions
+    // Else display an error message
     if (
       platformSelection.size > 0 &&
       genreSelection.size > 0 &&
       mediaSelection.size > 0
     ) {
       errorMessage.innerHTML = "";
-      // Call gatherData function
       gatherUserSelectionData();
     } else {
       errorMessage.innerHTML =
@@ -164,8 +202,8 @@ function Search() {
       <div className="row h-100 mx-4">
         <div className="col d-flex flex-column p-0">
           <Header />
-          {/* Main Gradient Section Begins */}
           <main className="no-gradient h-100 d-flex flex-column justify-content-center align-items-center">
+            {/* Selection Section Begins */}
             <Platform
               changePlatformSelection={(choice) => setPlatformSelection(choice)}
             />
@@ -175,9 +213,9 @@ function Search() {
             <MediaType
               changeMediaSelection={(choice) => setMediaSelection(choice)}
             />
-            {/* Creates api url and goes to results page */}
+            {/* Selection Section Ends */}
+            {/* Button Section Begins */}
             <section className="submit-section light-gradient">
-              {/* <Link to="/results"> */}
               <button
                 onClick={handleSubmitClick}
                 type="button"
@@ -185,11 +223,10 @@ function Search() {
               >
                 Submit
               </button>
-              {/* </Link> */}
             </section>
+            {/* Button Section Ends */}
             <p className="error-message"></p>
           </main>
-          {/* Main Gradient Section Ends */}
           <Footer />
         </div>
       </div>

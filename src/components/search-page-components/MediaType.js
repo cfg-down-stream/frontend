@@ -12,7 +12,10 @@ function MediaType(props) {
     </li>
   ));
 
-  // Add purple border to clicked list item
+  /* HANDLE FILTER FUNCTION
+  When clicked - add purple border and change text to purple
+  When "unclicked" - remove purple border and change text back
+*/
   function handleFilter(event) {
     if (event.currentTarget.classList[0] === "default-border") {
       event.currentTarget.classList.remove("default-border");
@@ -23,11 +26,13 @@ function MediaType(props) {
     }
   }
 
-  // Add media type to array, push to Search component, and call handleFilter(),
+  /* HANDLE MEDIA CLICK FUNCTION */
   function handleMediaClick(event) {
+    // Add media type to mediaSelection set
     const media = event.currentTarget.textContent.toLowerCase();
     mediaSelection.add(media);
-    // Remove media item from  set if it is unselected
+
+    // Remove media type from mediaSelection set if it is unclicked
     if (
       event.currentTarget.classList[0] === "active" &&
       mediaSelection.size > 0
@@ -36,8 +41,9 @@ function MediaType(props) {
     }
     console.log(mediaSelection);
 
-    // Push genreSelection set to Search component
+    // Push mediaSelection set to the Search.js (parent) component through the parent's changePlatformChoice function
     props.changeMediaSelection(mediaSelection);
+
     handleFilter(event);
   }
 
