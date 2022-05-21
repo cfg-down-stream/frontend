@@ -17,6 +17,8 @@ function SignUp() {
   const [country, setCountry] = useState("")
   const [selectedDate, setSelectedDate] = useState(new Date())
 
+  // username already taken
+  // const [signuperror, setSignupError]= useState("")
 
 
   const [isAgeError, setIsAgeError] = useState(false)
@@ -46,7 +48,13 @@ function SignUp() {
      country: country,
      password: password
     }).then ((response) => {
-      console.log (response.data);
+      console.log(response.data)
+      // if (response.data.message.length > 0) {
+      //   setSignupError(response.data.message)
+      // } else {
+      //   setSignupError(response.data)
+      // }
+      
     });
   }
 
@@ -142,7 +150,7 @@ function SignUp() {
                       <option value="">--select--</option>
                       <option value="USA">United States of America</option>
                       <option value="Other">Other</option>
-                      {/* can use API for country */}
+        
                     </select>
                   </div>
                 </div>
@@ -174,6 +182,11 @@ function SignUp() {
                 </div> 
                 
                 <div>
+
+                <div id="emailHelp" className="h6">
+                  {/* <h6>{signuperror}</h6> */}
+                </div>
+
                 <button
                    type="submit" 
                    className="buttn"

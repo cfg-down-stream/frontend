@@ -2,24 +2,36 @@ import { Link } from "react-router-dom";
 import "./LogIn.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import React, { Component, useState } from "react";
 import Axios, * as axios from "axios";
+
 
 function LogIn() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
+  
+  const [LoginError, setLoginErorr] = useState("")
+  
   // sets up the connection with the backend
   const loginpage = () => {
     console.log("logging in")
     axios.post("http://localhost:3000/login", {
-     email: email,
-     password: password,
+      email: email,
+      password: password,
+      //checks to see if there is a message from the backend, if so diplays it 
     }).then ((response) => {
-      console.log (response.data);
+      if(response.data.message.length >0) {
+        setLoginErorr(response.data.message)
+      } else {
+        setLoginErorr(response.data[0].username)
+      }
+      
     });
     
   };
+
+
+  
 
   return (
     <div className="container-fluid h-100">
@@ -37,7 +49,7 @@ function LogIn() {
           <form onSubmit={(event) => event.preventDefault()}>
               <div className="input-group-sm mb-3 ">
                 <label
-                  for="exampleInputEmail1"
+                  htmlFor="exampleInputEmail1"
                   className="col-form-label-m h6"
                 >
                 Email address
@@ -51,14 +63,11 @@ function LogIn() {
                    setEmail(event.target.value)
                   }}
                 />
-                <div id="emailHelp" className="form-text">
-                  Error message text
-                </div>
               </div>
 
               <div className="input-group-sm mb-4">
                 <label
-                  for="exampleInputPassword1"
+                  htmlFor="exampleInputPassword1"
                   className="col-form-label-m h6"
                 >
                 Password
@@ -72,6 +81,9 @@ function LogIn() {
                 />
               </div>
 
+              <div id="emailHelp" className="h6">
+                  <h6>{LoginError}</h6>
+                </div>
               <div>
               <button 
                 className="log-btn"
