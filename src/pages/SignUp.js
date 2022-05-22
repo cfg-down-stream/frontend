@@ -18,7 +18,7 @@ function SignUp() {
   const [selectedDate, setSelectedDate] = useState(new Date())
 
   // username already taken
-  // const [signuperror, setSignupError]= useState("")
+  const [signuperror, setSignupError]= useState("")
 
 
   const [isAgeError, setIsAgeError] = useState(false)
@@ -49,11 +49,11 @@ function SignUp() {
      password: password
     }).then ((response) => {
       console.log(response.data)
-      // if (response.data.message.length > 0) {
-      //   setSignupError(response.data.message)
-      // } else {
-      //   setSignupError(response.data)
-      // }
+      if (response.data.message.length > 0) {
+        setSignupError(response.data.message)
+      } else {
+        setSignupError(response.data)
+      }
       
     });
   }
@@ -184,7 +184,7 @@ function SignUp() {
                 <div>
 
                 <div id="emailHelp" className="h6">
-                  {/* <h6>{signuperror}</h6> */}
+                  <h6>{signuperror}</h6>
                 </div>
 
                 <button
