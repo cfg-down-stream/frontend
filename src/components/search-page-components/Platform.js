@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Axios, * as axios from "axios";
+
 import "./Platform.css";
 import Netflix from "../../assets/netflix-logo.png";
 import Prime from "../../assets/prime-logo.png";
@@ -9,8 +11,15 @@ import HBO from "../../assets/hbo-logo.png";
 
 function Platform(props) {
   /* SET STATES */
-  const [username, setUsername] = useState("Stranger");
+  const [name, setName] = useState("Stranger");
   const [platformSelection, setPlatformSelection] = useState(new Set());
+
+  // Get user's name from db and set name state
+  useEffect(() => {
+    Axios.get("http://localhost:3000/search").then((response) => {
+      setName(response.data[0].Name);
+    });
+  }, []);
 
   /* HANDLE FILTER FUNCTION
   When clicked - remove greyscale, add purple border, change text colour to purple.
@@ -51,7 +60,7 @@ function Platform(props) {
   return (
     <section className="light-gradient">
       <h1 className="search-h1">
-        Hello <span className="black-text">{username}</span>, where are you
+        Hello <span className="black-text">{name}</span>, where are you
         watching?{" "}
       </h1>
       <div className="platform-card-container">
