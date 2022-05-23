@@ -6,7 +6,7 @@ import Axios, * as axios from "axios";
 
 function Profile() {
   //create empty array for returning the name of the user and favourites
-  const [profilename, setProfilename] = new Set()
+  const [profilename, setProfilename] = useState([])
 
 
   //get request to API end point in the backend
