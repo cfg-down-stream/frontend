@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LogIn.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -11,27 +11,26 @@ function LogIn() {
   const [password, setPassword] = useState("")
   
   const [LoginError, setLoginErorr] = useState("")
+  const navigator = useNavigate()
   
   // sets up the connection with the backend
   const loginpage = () => {
-    console.log("logging in")
     axios.post("http://localhost:3000/login", {
       email: email,
       password: password,
       //checks to see if there is a message from the backend, if so diplays it 
     }).then ((response) => {
-      if(response.data.message.length >0) {
+      if(response.data.message) {
         setLoginErorr(response.data.message)
       } else {
-        setLoginErorr(response.data[0].username)
+        setLoginErorr(null)
+        navigator("/Search")
       }
       
     });
-    
+
   };
 
-
-  
 
   return (
     <div className="container-fluid h-100">
