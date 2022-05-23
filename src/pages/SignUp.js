@@ -1,4 +1,5 @@
-import { useState } from "react";
+import {  useState } from "react";
+import {useNavigate} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "../components/Header";
@@ -16,15 +17,15 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [country, setCountry] = useState("")
   const [selectedDate, setSelectedDate] = useState(new Date())
+  
 
-  // username already taken
+  // Email already in use
   const [signuperror, setSignupError]= useState("")
+  const navigator = useNavigate()
 
-  //User must be over 16
   const [isAgeError, setIsAgeError] = useState(false)
  
   const validateBirthDate = (payload) => {
-    // let birthDate = new Date(payload)
     let today = new Date()
   
     let age = today.getFullYear() - payload.getFullYear();
@@ -38,7 +39,6 @@ function SignUp() {
   };
 
   const signuppage = () => {
-    console.log("Sign up in progress")
     axios.post("http://localhost:3000/signup", {
      name: name,
      surname: surname,
@@ -49,10 +49,11 @@ function SignUp() {
      password: password
     }).then ((response) => {
       console.log(response.data)
-      if (response.data.message.length > 0) {
+      if (response.data.message) {
         setSignupError(response.data.message)
       } else {
-        setSignupError(response.data)
+        setSignupError(null)
+        navigator("/Login")
       }
       
     });
