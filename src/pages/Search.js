@@ -56,7 +56,7 @@ function Search() {
   2. Return 5 random show/film ids
   3. Call the updateGlobalState function */
   function apiCall(sourceIds, genreIds, mediaIds) {
-    const apiKey = "FXxG27lVwTVEVSaNjkSKL6rMVoa6eVXb5W0fjHuc";
+    const apiKey = "zrVGwEWbj3fSgYJ0llyF8QZOAPbxLTXz1Dgiuj3a";
     const apiUrl = `https://api.watchmode.com/v1/list-titles/?apiKey=${apiKey}&source_ids=${sourceIds}&types=${mediaIds}&genres=${genreIds}&page=1`;
 
     // Fetch api

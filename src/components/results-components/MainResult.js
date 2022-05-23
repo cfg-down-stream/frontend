@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../../store/Store";
+import Axios, * as axios from "axios";
 import "./MainResult.css";
 
 function MainResult() {
   const [state, dispatch] = useContext(Context);
+  const [userId, setUserId] = useState(1);
   const [title, setTitle] = useState("Title");
   const [titleId, setTitleId] = useState(null);
   const [plotOverview, setPlotOverview] = useState(null);
@@ -94,7 +96,7 @@ function MainResult() {
    */
   function apiCall() {
     const mainResultId = state.apiIds[0];
-    const apiKey = "FXxG27lVwTVEVSaNjkSKL6rMVoa6eVXb5W0fjHuc";
+    const apiKey = "zrVGwEWbj3fSgYJ0llyF8QZOAPbxLTXz1Dgiuj3a";
     const apiUrl = `https://api.watchmode.com/v1/title/${mainResultId}/details/?apiKey=${apiKey}&append_to_response=sources`;
 
     fetch(apiUrl)
@@ -109,29 +111,51 @@ function MainResult() {
       .catch((err) => console.error(err));
   }
 
-  /* REMOVE FROM FAVOURITES FUNCTION */
-  function saveToFavourites(title_id) {
-    console.log(`Save ${title_id} to favourites`);
+  /* SAVE TO FAVOURITES FUNCTION */
+  function saveToFavourites(favTitleId) {
+    console.log(`Save ${favTitleId} to favourites`);
+
+    axios
+      .post("http://localhost:3000/results", {
+        user_id: userId,
+        title_id: favTitleId,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  /* SAVE TO FAVOURITES FUNCTION */
-  function removeFromFavourites(title_id) {
-    console.log(`Remove ${title_id} to favourites`);
+  /* REMOVE FROM FAVOURITES FUNCTION */
+  function removeFromFavourites(favTitleId) {
+    console.log(`Remove ${favTitleId} to favourites`);
+
+    Axios.delete("http://localhost:3000/results", {
+      title_id: favTitleId,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   /* HANDLE HEART CLICK FUNCTION
   1. When clicked, send the current targets title_id to the saveToFavourites function
   2. When "unclicked" send the current targets title_id to the removeFromFavourites function r*/
   function handleHeartClick(event) {
-    const title_id = event.currentTarget.id;
+    const favTitleId = event.currentTarget.id;
     if (event.currentTarget.classList[1] === "bi-heart") {
       event.currentTarget.classList.remove("bi-heart");
       event.currentTarget.classList.add("bi-heart-fill");
-      saveToFavourites(title_id);
+      saveToFavourites(favTitleId);
     } else {
       event.currentTarget.classList.remove("bi-heart-fill");
       event.currentTarget.classList.add("bi-heart");
-      removeFromFavourites(title_id);
+      removeFromFavourites(favTitleId);
     }
   }
 
