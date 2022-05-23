@@ -20,7 +20,7 @@ function SignUp() {
   // username already taken
   const [signuperror, setSignupError]= useState("")
 
-
+  //User must be over 16
   const [isAgeError, setIsAgeError] = useState(false)
  
   const validateBirthDate = (payload) => {
