@@ -8,7 +8,9 @@ function Profile() {
   //create empty array for returning the name of the user and favourites
   const [profileName, setProfileName] = useState("");
   const [titleIds, setTitleIds] = useState([]);
-
+  // const [titleinformation, set] = useState({//nested objects, title, title id, image link, watch link})
+  
+  
   //get request to API end point in the backend
   useEffect(() => {
     Axios.get("http://localhost:3000/profile").then((response) => {
@@ -33,6 +35,11 @@ function Profile() {
 
     console.log("Title Ids: " + titleIds);
   }
+// function APIcall() {
+//   //map through the titleids, Inside of map paste axios get, then console the response
+//   Axios.get(`https://api.watchmode.com/v1/title/${id}/details/?apiKey=${apiKey}&append_to_response=sources`)
+// }
+
 
   return (
     <div className="container-fluid h-100">
