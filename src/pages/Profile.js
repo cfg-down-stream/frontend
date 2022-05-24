@@ -118,114 +118,111 @@ function Profile() {
 
   return (
     <section className="favourite-section">
-    <h3 className="favourite-h3">{state.name}'s Favourites</h3>
-    <div className="favourite-container">
-      {/* Favourite One Begins*/}
-      <div className="favourite">
-        <a
-          href={titleInfo.one.watchLink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {" "}
-          <h4 className="favourite-h4 ">{titleInfo.one.title}</h4>
-        </a>
-        <div className="favourite-image-container">
+      <h3 className="favourite-h3">{state.name}'s Favourites</h3>
+      <div className="favourite-container">
+        {/* Favourite One Begins*/}
+        <div className="favourite">
           <a
             href={titleInfo.one.watchLink}
             target="_blank"
             rel="noopener noreferrer"
           >
             {" "}
-            <img
-              className="favourite-image"
-              src={titleInfo.one.poster}
-              alt={`${titleInfo.one.title} poster`}
-            />
+            <h4 className="favourite-h4 ">{titleInfo.one.title}</h4>
           </a>
+          <div className="favourite-image-container">
+            <a
+              href={titleInfo.one.watchLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {" "}
+              <img
+                className="favourite-image"
+                src={titleInfo.one.poster}
+                alt={`${titleInfo.one.title} poster`}
+              />
+            </a>
+          </div>
         </div>
-
-      </div>
-      {/* Favourite One Ends*/}
-      {/* Favourite Two Begins */}
-      <div className="favourite">
-        <a
-          href={titleInfo.two.watchLink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {" "}
-          <h4 className="favourite-h4 ">{titleInfo.two.title}</h4>
-        </a>
-        <div className="favourite-image-container">
+        {/* Favourite One Ends*/}
+        {/* Favourite Two Begins */}
+        <div className="favourite">
           <a
             href={titleInfo.two.watchLink}
             target="_blank"
             rel="noopener noreferrer"
           >
             {" "}
-            <img
-              className="favourite-image"
-              src={titleInfo.two.poster}
-              alt={`${titleInfo.two.title} poster`}
-            />
+            <h4 className="favourite-h4 ">{titleInfo.two.title}</h4>
           </a>
+          <div className="favourite-image-container">
+            <a
+              href={titleInfo.two.watchLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {" "}
+              <img
+                className="favourite-image"
+                src={titleInfo.two.poster}
+                alt={`${titleInfo.two.title} poster`}
+              />
+            </a>
+          </div>
         </div>
-
-      </div>
-      {/* Favourite TwoEnds*/}
-      {/* Favourite Three Begins */}
-      <div className="favourite">
-        <a
-          href={titleInfo.three.watchLink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {" "}
-          <h4 className="favourite-h4 ">{titleInfo.three.title}</h4>
-        </a>
-        <div className="favourite-image-container">
+        {/* Favourite TwoEnds*/}
+        {/* Favourite Three Begins */}
+        <div className="favourite">
           <a
             href={titleInfo.three.watchLink}
             target="_blank"
             rel="noopener noreferrer"
           >
             {" "}
-            <img
-              className="favourite-image"
-              src={titleInfo.three.poster}
-              alt={`${titleInfo.three.title} poster`}
-            />
+            <h4 className="favourite-h4 ">{titleInfo.three.title}</h4>
           </a>
+          <div className="favourite-image-container">
+            <a
+              href={titleInfo.three.watchLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {" "}
+              <img
+                className="favourite-image"
+                src={titleInfo.three.poster}
+                alt={`${titleInfo.three.title} poster`}
+              />
+            </a>
+          </div>
         </div>
-
-      </div>
-      {/* Favourite Three Ends*/}
-      {/* Favourite Four  Begins */}
-      <div className="favourite">
-        <a
-          href={titleInfo.four.watchLink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {" "}
-          <h4 className="favourite-h4 ">{titleInfo.four.title}</h4>
-        </a>
-        <div className="favourite-image-container">
-          <a href={titleInfo.four.watchLink}>
+        {/* Favourite Three Ends*/}
+        {/* Favourite Four  Begins */}
+        <div className="favourite">
+          <a
+            href={titleInfo.four.watchLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {" "}
-            <img
-              className="favourite-image"
-              src={titleInfo.four.poster}
-              alt={`${titleInfo.four.title} poster`}
-            />
+            <h4 className="favourite-h4 ">{titleInfo.four.title}</h4>
           </a>
+          <div className="favourite-image-container">
+            <a href={titleInfo.four.watchLink}>
+              {" "}
+              <img
+                className="favourite-image"
+                src={titleInfo.four.poster}
+                alt={`${titleInfo.four.title} poster`}
+              />
+            </a>
+          </div>
         </div>
+        {/* Favourite FOUR Ends*/}
       </div>
-      {/* Favourite FOUR Ends*/}
-    </div>
-  </section>
-);
+    </section>
+  );
 }
 
 export default Profile;

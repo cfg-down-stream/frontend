@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import Axios, * as axios from "axios";
 import { Context } from "../../store/Store";
 
 import "./Platform.css";
@@ -15,13 +14,6 @@ function Platform(props) {
   const [name, setName] = useState("Stranger");
   const [platformSelection, setPlatformSelection] = useState(new Set());
   const [state, dispatch] = useContext(Context);
-
-  // Get user's name from db and set name state
-  useEffect(() => {
-    Axios.get("http://localhost:3000/search").then((response) => {
-      setName(response.data[0].Name);
-    });
-  }, []);
 
   /* HANDLE FILTER FUNCTION
   When clicked - remove greyscale, add purple border, change text colour to purple.
