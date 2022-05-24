@@ -17,17 +17,19 @@ function Search() {
   const [state, dispatch] = useContext(Context);
   const navigator = useNavigate();
 
-  /* USE EFFECT */
+  /* USE EFFECT
+  handleSubmitClick has to be called on the initial render to ensure the global states set when the user clicks
+  */
   useEffect(() => {
     // console.log("Rendering");
-    // If the two global states are not null (have been set in updateGlobalState functions), call the goToResultPage function
+    // If the two global states are not null (have been set in updateGlobalState function), goToeResultsPage()
     // Else call the handleSubmitClick function
     if (state.apiIds && state.apiSearchIds) {
       console.log(`Global states: ${state.apiIds} + ${state.apiSearchIds}`);
       goToResultsPage();
     } else {
       // handleSubmit will call on the first render, and then after the user clicks submit
-      // Ff the global states aren't updated on the first suer click, useEffect will call handleSubmitClick again
+      // If the global states aren't updated on the first user click, useEffect will call handleSubmitClick again
       handleSubmitClick();
     }
   }, [state]);
@@ -43,7 +45,7 @@ function Search() {
   }
 
   /* UPDATE GLOBAL STATE FUNCTION
-  1. Send fiveTitleIds and searchIds to the global store
+  1. Dispatch fiveTitleIds and searchIds to the global store
   */
   async function updateGlobalState(fiveRandomTitleIds) {
     await dispatch({ type: "SET_API_IDS_STATE", payload: fiveRandomTitleIds });
@@ -69,8 +71,8 @@ function Search() {
       })
       .then((data) => {
         // If data object length is less than 4, go to error page
-        if (Object.keys(data).length < 4) {
-          console.log(`Api Data Length: ${Object.keys(data).length}`);
+        if (Object.keys(data).length < 5) {
+          // console.log(`Api Data Length: ${Object.keys(data).length}`);
           navigator("/Error");
         } else {
           // Else, push 5 random numbers to randomIndex array
@@ -82,12 +84,10 @@ function Search() {
           const fiveRandomTitleIds = randomIndex.map((index) => {
             return data.titles[index].id;
           });
-          console.log("5 Random Ids: " + fiveRandomTitleIds);
           return fiveRandomTitleIds;
         }
       })
       .then((fiveRandomTitleIds) => {
-        // Call updateGlobalState with fiveRandomTitleIds as an argument
         updateGlobalState(fiveRandomTitleIds);
       })
       .catch((err) => console.error(err));
@@ -142,16 +142,10 @@ function Search() {
   function gatherUserSelectionData() {
     // PLATFORM/SOURCE
     const sourceIdsArray = [];
-
-    // Convert the platformSelection set from the Platform.js child into an array
     const platformSelectionArray = Array.from(platformSelection);
-
-    // For each platform in the platformSelectionArray, find the id in the platformIdsObject, then push the id to the  sourceIdsArray
     platformSelectionArray.forEach((platform) => {
       sourceIdsArray.push(platformIdsObject[platform]);
     });
-
-    // Convert the sourceIdsArray to a string
     const sourceIds = sourceIdsArray.toString();
 
     // GENRE
@@ -172,17 +166,15 @@ function Search() {
 
     // Set the searchIds state with the Ids array, so that it can be made into a global state and used for some details in the Results page
     setSearchIds([sourceIdsArray, genreIdsArray, mediaIdsArray]);
-    console.log(`search id state: ${searchIds}`);
+    // console.log(`search id state: ${searchIds}`);
 
-    // Call apiCall function, passing the id string variables
     apiCall(sourceIds, genreIds, mediaIds);
   }
 
   /* HANDLE SUBMIT CLICK FUNCTION */
   function handleSubmitClick() {
     const errorMessage = document.querySelector(".error-message");
-    // If the user has chosen a platform, genre, and media call the gatherUserSelectionFunctions
-    // Else display an error message
+    // If the user has chosen a platform, genre, and media -> call the gatherUserSelectionFunctions
     if (
       platformSelection.size > 0 &&
       genreSelection.size > 0 &&
