@@ -28,8 +28,19 @@
   background-color: #b8b9f4;
 }
 
-.alert {
-  font-size: 11px;
-  color: red;
+.react-datepicker-wrapper {
+  margin-bottom: 5px !important;
+}
 
+.alert {
+  font-size: 0.8rem !important;
+  color: #FF235E;
+  font-weight: 500;
+  padding: 1rem 0 !important;
+}
+
+h6 {
+  font-size: 0.8rem !important;
+  color: #FF235E !important;
+  font-weight: 500;
 }
