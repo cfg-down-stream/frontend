@@ -10,16 +10,24 @@ function Profile() {
   const [profileName, setProfileName] = useState("");
   const [titleIds, setTitleIds] = useState([]);
   const [state, dispatch] = useContext(Context);
-  const [titleimage, setTitleimage] = useState({ titleIds });
-
+  const [image, setImage] = useState(null);
+  
+  function getImage(data) {
+    setImage(data.backdrop)
+    }
+  
   //get request to API end point in the backend
   useEffect(() => {
-    Axios.get(`http://localhost:3000/profile/${state.id}`).then((response) => {
+    Axios.get(`http://localhost:3000/profile/${state.id}`)
+    .then((response) => {
       // console.log("Data: " + response.data);
       const data = response.data;
-      handleResponse(data);
+      handleResponse(data)
+    .then(getImage (data) {
+      // console.log(data);
+      getImage(data);;
     });
-  }, []);
+  }, [])};
 
   // Use the data from the GET api response
   function handleResponse(data) {
@@ -27,8 +35,12 @@ function Profile() {
       data.map((row) => {
         return row.Title_id;
       })
+    
     );
+    }
+  )
 
+    
     // console.log("Title Ids: " + titleIds);
     apiCall();
   }
@@ -75,7 +87,6 @@ function Profile() {
                 <div className="Name">
                   <h3>{state.name}'s Favourites</h3>
                   <h3>{titleIds}</h3>
-                  {/* <p>{favourites[0].name}</p> */}
                 </div>
               </div>
             </h3>
@@ -86,6 +97,6 @@ function Profile() {
       </div>
     </div>
   );
-}
+};
 
-export default Profile;
+export default Profile
