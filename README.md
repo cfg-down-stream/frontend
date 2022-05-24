@@ -192,3 +192,14 @@ The app.delete(”/results”) endpoint is supposed to delete a show/film from t
 
 We couldn’t get this endpoint to successfully work as for some reason the axios.delete() method in the frontend could not find the [localhost:3000](http://localhost:3000) server. If the project was longer, this is something that we would’ve looked into further.\*
 
+### Post /signup
+
+The app.post("/signup") endpoint is used to sign up a new user to the downStream application. It works by connecting to the signup form in the frontend of the application and retreiving the inputs that the user has entered into the form. After retreiving the data the endpoint then queries the database to see if the email address that the user has entered has previously been used by another account present in the Users table. If this is the case, a message is diplayed to the user stating that the email address is already in use. If the query does not find the email address already in the database, then the user information is inserted into the Users table, in order to create a new user.
+
+### Post /login
+
+The app.post("/login) endpoint is used to sucessfully log a user in to the downStream application. It works by connecting to the login form in the frontend of the application and retreiving the inputs that the user has entered into the form. 
+After retreiving the user's email address and password from the form the endpoint then queries the database to check if the email address and password the user has entered matches an entry in the Users table. If the query can not find the email address or password in the Users table then a message is displayed to the user stating that the incorrect email or password has been entered. If the query does find the email and password in the Users table the user is then logged into the application.
+
+### Get /profile
+The app.get("/profile) endpoint is used to retrieve the Title ids of titles that have been added by users to the favourites table. Using the post/results endpoint a user can add favourites to the Favourites table. Based on whatever user is currently logged in on the application, the app.get("/profile) endpoint can then make a query to the Favourites table, using the unique user id, to retrieve the Title ids of the user's favourites. These Title ids are then sent to the front end of the application where they are then used to retrieve information from the external API.
