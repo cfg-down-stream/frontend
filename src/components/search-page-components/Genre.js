@@ -60,7 +60,7 @@ function Genre(props) {
     ) {
       genreSelection.delete(genre);
     }
-    console.log(genreSelection);
+    // console.log(genreSelection);
 
     // Push genreSelection set to the Search.js (parent) component through the parent's changePlatformChoice function
     props.changeGenreSelection(genreSelection);

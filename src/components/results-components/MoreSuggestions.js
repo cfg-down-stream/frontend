@@ -109,7 +109,7 @@ function MoreSuggestions() {
 
   /* SAVE TO FAVOURITES FUNCTION */
   function saveToFavourites(favTitleId) {
-    console.log(`Save ${favTitleId} to favourites`);
+    // console.log(`Save ${favTitleId} to favourites`);
     axios
       .post("http://localhost:3000/results", {
         user_id: userId,
@@ -125,7 +125,7 @@ function MoreSuggestions() {
 
   /* REMOVE FROM FAVOURITES FUNCTION */
   function removeFromFavourites(favTitleId) {
-    console.log(`Remove ${favTitleId} to favourites`);
+    // console.log(`Remove ${favTitleId} to favourites`);
   }
 
   /* HANDLE HEART CLICK FUNCTION

@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Axios, * as axios from "axios";
+import { Context } from "../../store/Store";
 
 import "./Platform.css";
 import Netflix from "../../assets/netflix-logo.png";
@@ -13,6 +14,7 @@ function Platform(props) {
   /* SET STATES */
   const [name, setName] = useState("Stranger");
   const [platformSelection, setPlatformSelection] = useState(new Set());
+  const [state, dispatch] = useContext(Context);
 
   // Get user's name from db and set name state
   useEffect(() => {
@@ -48,7 +50,7 @@ function Platform(props) {
     ) {
       platformSelection.delete(value);
     }
-    console.log(platformSelection);
+    // console.log(platformSelection);
 
     // Push platformSelection set to the Search.js (parent) component through the parent's changePlatformChoice function
     props.changePlatformSelection(platformSelection);
@@ -60,7 +62,7 @@ function Platform(props) {
   return (
     <section className="light-gradient">
       <h1 className="search-h1">
-        Hello <span className="black-text">{name}</span>, where are you
+        Hello <span className="black-text">{state.name}</span>, where are you
         watching?{" "}
       </h1>
       <div className="platform-card-container">

@@ -4,6 +4,8 @@ import Reducer from "./Reducer";
 const initialState = {
   apiIds: null,
   apiSearchIds: null,
+  id: null,
+  name: "Stranger",
 };
 
 function Store({ children }) {

@@ -39,7 +39,7 @@ function MediaType(props) {
     ) {
       mediaSelection.delete(media);
     }
-    console.log(mediaSelection);
+    // console.log(mediaSelection);
 
     // Push mediaSelection set to the Search.js (parent) component through the parent's changePlatformChoice function
     props.changeMediaSelection(mediaSelection);

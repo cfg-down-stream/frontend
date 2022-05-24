@@ -19,8 +19,7 @@ function Search() {
 
   /* USE EFFECT */
   useEffect(() => {
-    // Log "Rendering" everytime the state renders and call goToResultsPage
-    console.log("Rendering");
+    // console.log("Rendering");
     // If the two global states are not null (have been set in updateGlobalState functions), call the goToResultPage function
     // Else call the handleSubmitClick function
     if (state.apiIds && state.apiSearchIds) {

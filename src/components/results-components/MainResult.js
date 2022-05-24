@@ -5,7 +5,6 @@ import "./MainResult.css";
 
 function MainResult() {
   const [state, dispatch] = useContext(Context);
-  const [userId, setUserId] = useState(1);
   const [title, setTitle] = useState("Title");
   const [titleId, setTitleId] = useState(null);
   const [plotOverview, setPlotOverview] = useState(null);
@@ -57,7 +56,7 @@ function MainResult() {
       }
     }
 
-    console.log("urls" + webUrl);
+    // console.log("urls" + webUrl);
     // Set the watchLink at the first url in the webUrl array
     setWatchLink(webUrl[0]);
   }
@@ -83,7 +82,7 @@ function MainResult() {
     setImdbId(data.imdb_id);
     setGenreNames(data.genre_names.join(", "));
     setRating(data.us_rating);
-    console.log("obj" + platformIdsObject);
+    // console.log("obj" + platformIdsObject);
     updateNetwork(platformIdsObject, data);
     updateWatchLink(data);
     updateType(data);
@@ -105,7 +104,7 @@ function MainResult() {
       })
       .then(function (json) {
         let data = json;
-        console.log(data);
+        // console.log(data);
         updateStates(data);
       })
       .catch((err) => console.error(err));
@@ -113,11 +112,11 @@ function MainResult() {
 
   /* SAVE TO FAVOURITES FUNCTION */
   function saveToFavourites(favTitleId) {
-    console.log(`Save ${favTitleId} to favourites`);
+    // console.log(`Save ${favTitleId} to favourites`);
 
     axios
       .post("http://localhost:3000/results", {
-        user_id: userId,
+        user_id: state.id,
         title_id: favTitleId,
       })
       .then((response) => {
@@ -130,10 +129,13 @@ function MainResult() {
 
   /* REMOVE FROM FAVOURITES FUNCTION */
   function removeFromFavourites(favTitleId) {
-    console.log(`Remove ${favTitleId} to favourites`);
+    // console.log(`Remove ${favTitleId} to favourites`);
 
     Axios.delete("http://localhost:3000/results", {
-      title_id: favTitleId,
+      body: {
+        title_id: favTitleId,
+        user_id: state.id,
+      },
     })
       .then((response) => {
         console.log(response);
