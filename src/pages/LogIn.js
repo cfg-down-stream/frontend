@@ -85,9 +85,7 @@ function LogIn() {
                   />
                 </div>
 
-                <div id="emailHelp" className="h6">
-                  <h6>{LoginError}</h6>
-                </div>
+                <div className="error-message">{LoginError}</div>
                 <div>
                   <button
                     className="log-btn"

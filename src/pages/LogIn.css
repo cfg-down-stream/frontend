@@ -1,10 +1,10 @@
 .display-6 {
     font-weight: 500;
 }
-#emailHelp{
+/* #emailHelp{
     color: #FF235E;
     font-size: 0.8rem !important;
-}
+} */
 
 .log-btn{
     width: 100%;
@@ -26,10 +26,4 @@
     padding: 50px 60px;
     background-color: #F7F7F7;
     border-radius: 6px;
-}
-
-h6 {
-    font-size: 0.8rem !important;
-    color: #FF235E;
-    font-weight: 500;
 }

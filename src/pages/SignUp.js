@@ -192,9 +192,7 @@ function SignUp() {
                 </div>
 
                 <div>
-                  <div id="emailHelp" className="h6">
-                    {signuperror}
-                  </div>
+                  <div className="error-message">{signuperror}</div>
 
                   <button
                     type="submit"

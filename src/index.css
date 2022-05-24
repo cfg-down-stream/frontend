@@ -37,7 +37,8 @@ main {
 
 .error-message {
   color: #FF235E;
-  font-size: 12px;
+  font-size: 0.8rem !important;
+  font-weight: 500;
   margin: 12px 0 0 0;
   padding: 0;
 }
