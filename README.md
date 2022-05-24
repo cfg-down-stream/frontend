@@ -140,7 +140,7 @@ In the Results.js page, there are two components: MainResult & MoreSuggestions.
 
 These two components used Watchmode’s “title” endpoint, which takes a title id as a parameter and return in depth data.
 
-![Screenshot 2022-05-24 at 16.36.40.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5b71db1b-cdb7-4e9b-b88f-83ba26db2c94/Screenshot_2022-05-24_at_16.36.40.png)
+![List-titles endpoint example](/src/assets/title-endpoint-example.png)
 
 The “title” endpoint included the data we needed to fill our results page. This included: the title, genres, backdrop and poster images, plot overview, IMDb id, rating, and watch link.
 
@@ -169,8 +169,6 @@ Endpoint: https://api.watchmode.com/v1/title/
 In the Results page, there are two components: MainResult & MoreSuggestions.
 
 These two components used Watchmode’s “title” endpoint, which takes a title id as a parameter and returns in-depth data.
-
-![Title endpoint example](/src/assets/title-endpoint-example.png)
 
 The “title” endpoint contains the data we need to fill our results page. This includes:
 
