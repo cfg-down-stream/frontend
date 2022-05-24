@@ -1,6 +1,6 @@
 # downStream Documentation
 
-This project was created by -- link names here
+This project was created by [Lana](https://github.com/Larlar03), [Ellie](https://github.com/Ellieconheady), and [Aishat](https://github.com/aishayusuff).
 
 ## Installation
 
@@ -11,14 +11,15 @@ To run this app you can install all necessary packages by running in the termina
 ## Usage Reccomendations
 
 When using the search feature it suggested that you only select one streaming platform for your results. This is due to some inconsistencies in the external api and complications in returning the correct watch link. Due to the limited amout of time, we didn't have the chance to experiment more with data validation.
+<br />
+<br />
 
 ---
 
 ## Process Flow
 
-### Home Page
+### Home Page (Home.js)
 
-**Home.js**
 
 _image here_
 
@@ -27,9 +28,11 @@ _image here_
 - Play Icon - The play icon is a link to the main feature of the app which is a search page. This can be used without signing up or logging in.
 - Log In - Navigates the user to a page where they can log in to their account.
 
-### Sign Up Page
+<br />
+<br />
 
-**SignUp.js**
+### Sign Up Page (SignUp.js)
+
 
 _image here_
 
@@ -39,9 +42,11 @@ _image here_
 - As the free version of the external WatchMode api is limited to the USA, we only have that option in the “Country” dropdown.
 - When the user enters valid details and clicks the “Sign Up” button, they will be navigated to the Log In page.
 
-### Log In Page
+<br />
+<br />
 
-**LogIn.js**
+### Log In Page (LogIn.js)
+
 
 _image here_
 
@@ -50,9 +55,11 @@ _image here_
 - The “Log In” button will navigate to the Search page.
 - There is a link to the Sin Up page, if the user hasn’t signed up yet.
 
-### Search Page
+<br />
+<br />
 
-**Search.js**
+### Search Page (Search.js)
+
 
 _image here_
 
@@ -60,7 +67,7 @@ _image here_
 - The user can select multiple options for: streaming platforms, genres and whether they want a tv show or film.
 - The Submit button takes the user's selections to run an api call to the WatchMode api. Then navigates to the Results page.
 
-**Error Message**
+###### Search Page Error Message
 The "Submit" click function has to be called on the initial page render because for some reason the global states set on this page won't set on the first click. This means that our user would have to click "Submit" twice which isn't ideal.
 
 To get around this, an initial click function call happens on first render, which has no effect as no selection have been made. Then when the user clicks to submit their selections, the global states will set first time.
@@ -68,10 +75,13 @@ To get around this, an initial click function call happens on first render, whic
 Unfortunately this means that the error message below the "Submit" button is always on display, but is a minor detail in exchange of avoiding the user from having to click "Submit" twice.
 
 This is something that we would’ve worked to figure out by learning more about Redux and/or the useReducer Hook. However, getting 2 global states to set on such a complex page already took up quite a lot of time.
+<br />
+<br />
 
 ### Results Page
 
 **Results.js** with child components: **MainResult.js** and **MoreSuggestions.js**
+<br />
 
 ###### MainResult.js
 
@@ -87,6 +97,7 @@ _image here_
     - A heart icon to save the result to their favourites
     - A brief breakdown of the the result's platform, genre, type and content rating.
 - The heart icon will save the show to the user’s favourites when clicked, and remove from the favourites when un-clicked.
+- <br />
 
 ###### MoreSuggestions.js
 
@@ -100,6 +111,9 @@ _image here_
     - A heart icon to add or remove from the users favourites
 - The suggestion are not supposed to be similar to the main result, as the Search page picks random shows or films based on the chosen platform, genre and media type. This ensures that the user receives 5 random options based on their search requirements, and not 4 options simialar to the 1st option.
 
+<br />
+<br />
+
 ### Error Page
 
 **Error.js**
@@ -108,12 +122,15 @@ _image here_
 
 - The error page would display when the search returns 0 results. However, from testing this out 0 results is difficult to achieve.
 - There is an “if, else” block in the Search page that states if the api returns back less than 5 title ids, then the user should be navigated to the Error page. This is as on the Results page, we display 5 results.
+<br />
+<br />
 
 ---
 
 ## External API Endpoints
 
 For all of our external api calls, to retrieve show and movie data we used [WatchMode API](https://api.watchmode.com).
+<br />
 
 ### Search.js
 
@@ -128,6 +145,8 @@ The endpoint allows you to search for titles based on multiple parameters such a
 ![List-titles endpoint example](/src/assets/list-titles-endpoint-example.png)
 
 The data from this endpoint is limited and excludes important information that we needed such as an image, a watch link, and a plot overview. To get further information, this endpoint was used to return the ids from 5 random show/film titles. We then used these title ids in another endpoint that includes more data.
+
+<br />
 
 ### MainResult.js and MoreSugestions.js
 
@@ -146,11 +165,20 @@ The “title” endpoint included the data we needed to fill our results page. T
 
 The MainResult component returns one title from the endpoint using the first element in an array of 5 random title ids, returned from the Search page api call. The MoreSuggestions component maps through the remaining 4 elements in the random title ids array, and uses the “title” endpoint to return the necessary data to fill the component.
 
+<br />
+
+
 ### Profile.js
 
 src/pages/profile.js
 
 **Endpoint:** [https://api.watchmode.com/v1/title](https://api.watchmode.com/v1/title)
+
+The profile page also uses the v1/title endpoint to return the data for the shows and films that the user has favourited. And array of the user's favourites is mapped through, adn the ids are used to return thr necessary data.
+
+<br />
+<br />
+---
 
 ## Internal API Endpoints
 
