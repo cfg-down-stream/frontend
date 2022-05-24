@@ -170,8 +170,6 @@ In the Results page, there are two components: MainResult & MoreSuggestions.
 
 These two components used Watchmode’s “title” endpoint, which takes a title id as a parameter and returns in-depth data.
 
-![Title endpoint example](/src/assets/title-endpoint-example.png)
-
 The “title” endpoint contains the data we need to fill our results page. This includes:
 
 - The show/film title
