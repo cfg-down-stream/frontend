@@ -75,7 +75,6 @@ function Profile() {
                 <div className="Name">
                   <h3>{state.name}'s Favourites</h3>
                   <h3>{titleIds}</h3>
-                  {/* <p>{favourites[0].name}</p> */}
                 </div>
               </div>
             </h3>
