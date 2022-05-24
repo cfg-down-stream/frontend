@@ -10,7 +10,7 @@ function Profile() {
   const [profileName, setProfileName] = useState("");
   const [titleIds, setTitleIds] = useState([]);
   const [state, dispatch] = useContext(Context);
-  // const [titleinformation, set] = useState({//nested objects, title, title id, image link, watch link})
+  const [titleimage, setTitleimage] = useState({titleIds})
 
   //get request to API end point in the backend
   useEffect(() => {
@@ -30,11 +30,16 @@ function Profile() {
     );
 
     console.log("Title Ids: " + titleIds);
+  };
+
+  function APIcall() {
+    const apiKey = NuY1wbXmkOwxSZp6anpgcJR6oCmxJ06tTrDwJpNN;
+    titleimage.map(Axios.get(`https://api.watchmode.com/v1/title/${state.id}/details/?apiKey=${apiKey}&append_to_response=sources`)
+    )
+    .then((response) => {
+      console.log(response)
+    })
   }
-  // function APIcall() {
-  //   //map through the titleids, Inside of map paste axios get, then console the response
-  //   Axios.get(`https://api.watchmode.com/v1/title/${id}/details/?apiKey=${apiKey}&append_to_response=sources`)
-  // }
 
   return (
     <div className="container-fluid h-100">
