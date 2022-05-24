@@ -27,7 +27,8 @@ function Profile() {
       // console.log(data);
       getImage(data);;
     });
-  }, [])};
+  }, [])}
+  
 
   // Use the data from the GET api response
   function handleResponse(data) {
@@ -38,8 +39,8 @@ function Profile() {
     
     );
     }
+  
   )
-
     
     // console.log("Title Ids: " + titleIds);
     apiCall();
