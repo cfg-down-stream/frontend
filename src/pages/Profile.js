@@ -52,8 +52,8 @@ function Profile() {
 
   // Add data from GET api to array
   function handleResponse(data) {
-    const titleIds = data.map((id) => {
-      return id.Title_id;
+    const titleIds = data.map((row) => {
+      return row.Title_id;
     });
 
     // console.log(titleIds);
