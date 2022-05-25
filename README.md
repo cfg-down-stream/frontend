@@ -75,9 +75,9 @@ This is something that we would’ve worked to figure out by learning more about
 <br />
 <br />
 
-### Results Page
+### Results Page (Results.js)
 
-**Results.js** with child components: **MainResult.js** and **MoreSuggestions.js**
+With child components: **MainResult.js** and **MoreSuggestions.js**
 <br />
 
 ![List-titles endpoint example](/src/assets/results-page-example.png)
@@ -109,7 +109,7 @@ This is something that we would’ve worked to figure out by learning more about
 <br />
 <br />
 
-### Error Page
+### Error Page (Error.js)
 
 **Error.js**
 
