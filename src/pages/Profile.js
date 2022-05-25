@@ -117,6 +117,27 @@ function Profile() {
     });
   }
 
+  function saveToFavourites(favTitleId) {
+    console.log(`Save ${favTitleId} to favourites`);
+  }
+
+  function removeFromFavourites(favTitleId) {
+    console.log(`Remove ${favTitleId} to favourites`);
+  }
+
+  function handleHeartClick(event) {
+    const favTitleId = event.currentTarget.id;
+    if (event.currentTarget.classList[1] === "bi-heart-fill") {
+      event.currentTarget.classList.remove("bi-heart-fill");
+      event.currentTarget.classList.add("bi-heart");
+      removeFromFavourites(favTitleId);
+    } else {
+      event.currentTarget.classList.remove("bi-heart");
+      event.currentTarget.classList.add("bi-heart-fill");
+      saveToFavourites(favTitleId);
+    }
+  }
+
   return (
     <div className="container-fluid h-100">
       <div className="row h-100 mx-4">
@@ -139,9 +160,9 @@ function Profile() {
                     rel="noopener noreferrer"
                   >
                     {" "}
-                    <h4 className="favourite-h4 ">{titleInfo.one.title}</h4>
+                    <h4 className="suggestion-h4 ">{titleInfo.one.title}</h4>
                   </a>
-                  <div className="favourite-image-container">
+                  <div className="suggestion-image-container">
                     <a
                       href={titleInfo.one.watchLink}
                       target="_blank"
@@ -149,11 +170,27 @@ function Profile() {
                     >
                       {" "}
                       <img
-                        className="favourite-image"
+                        className="suggestion-image"
                         src={titleInfo.one.poster}
                         alt={`${titleInfo.one.title} poster`}
                       />
                     </a>
+                  </div>
+
+                  <div className="suggestion-links">
+                    {" "}
+                    <a
+                      href={`https://www.imdb.com/title/${titleInfo.one.imdbId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className="bi bi-info-circle"></i>
+                    </a>
+                    <i
+                      className={`bi bi-heart-fill`}
+                      id={titleInfo.one.id}
+                      onClick={handleHeartClick}
+                    ></i>
                   </div>
                 </div>
                 {/* Favourite One Ends*/}
@@ -165,9 +202,9 @@ function Profile() {
                     rel="noopener noreferrer"
                   >
                     {" "}
-                    <h4 className="favourite-h4 ">{titleInfo.two.title}</h4>
+                    <h4 className="suggestion-h4 ">{titleInfo.two.title}</h4>
                   </a>
-                  <div className="favourite-image-container">
+                  <div className="suggestion-image-container">
                     <a
                       href={titleInfo.two.watchLink}
                       target="_blank"
@@ -175,11 +212,27 @@ function Profile() {
                     >
                       {" "}
                       <img
-                        className="favourite-image"
+                        className="suggestion-image"
                         src={titleInfo.two.poster}
                         alt={`${titleInfo.two.title} poster`}
                       />
                     </a>
+                  </div>
+
+                  <div className="suggestion-links">
+                    {" "}
+                    <a
+                      href={`https://www.imdb.com/title/${titleInfo.two.imdbId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className="bi bi-info-circle"></i>
+                    </a>
+                    <i
+                      className={`bi bi-heart-fill`}
+                      id={titleInfo.two.id}
+                      onClick={handleHeartClick}
+                    ></i>
                   </div>
                 </div>
                 {/* Favourite TwoEnds*/}
@@ -191,9 +244,9 @@ function Profile() {
                     rel="noopener noreferrer"
                   >
                     {" "}
-                    <h4 className="favourite-h4 ">{titleInfo.three.title}</h4>
+                    <h4 className="suggestion-h4 ">{titleInfo.three.title}</h4>
                   </a>
-                  <div className="favourite-image-container">
+                  <div className="suggestion-image-container">
                     <a
                       href={titleInfo.three.watchLink}
                       target="_blank"
@@ -201,11 +254,27 @@ function Profile() {
                     >
                       {" "}
                       <img
-                        className="favourite-image"
+                        className="suggestion-image"
                         src={titleInfo.three.poster}
                         alt={`${titleInfo.three.title} poster`}
                       />
                     </a>
+                  </div>
+
+                  <div className="suggestion-links">
+                    {" "}
+                    <a
+                      href={`https://www.imdb.com/title/${titleInfo.three.imdbId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className="bi bi-info-circle"></i>
+                    </a>
+                    <i
+                      className={`bi bi-heart-fill`}
+                      id={titleInfo.three.id}
+                      onClick={handleHeartClick}
+                    ></i>
                   </div>
                 </div>
                 {/* Favourite Three Ends*/}
@@ -217,20 +286,40 @@ function Profile() {
                     rel="noopener noreferrer"
                   >
                     {" "}
-                    <h4 className="favourite-h4 ">{titleInfo.four.title}</h4>
+                    <h4 className="suggestion-h4 ">{titleInfo.four.title}</h4>
                   </a>
-                  <div className="favourite-image-container">
-                    <a href={titleInfo.four.watchLink}>
+                  <div className="suggestion-image-container">
+                    <a
+                      href={titleInfo.four.watchLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {" "}
                       <img
-                        className="favourite-image"
+                        className="suggestion-image"
                         src={titleInfo.four.poster}
                         alt={`${titleInfo.four.title} poster`}
                       />
                     </a>
                   </div>
+
+                  <div className="suggestion-links">
+                    {" "}
+                    <a
+                      href={`https://www.imdb.com/title/${titleInfo.four.imdbId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i className="bi bi-info-circle"></i>
+                    </a>
+                    <i
+                      className={`bi bi-heart-fill`}
+                      id={titleInfo.four.id}
+                      onClick={handleHeartClick}
+                    ></i>
+                  </div>
                 </div>
-                {/* Favourite FOUR Ends*/}
+                {/* Favourite Four Ends*/}
               </div>
             </section>
             {/* Favourites Section Begins */}
