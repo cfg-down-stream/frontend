@@ -145,7 +145,7 @@ The data from this endpoint is limited and excludes important information that w
 
 ### MainResult.js and MoreSugestions.js
 
-_src/components/MoreSuggestions.js_
+_src/components/MainResult.js_ <br />
 _src/components/MoreSuggestions.js_
 
 **Endpoint:** [https://api.watchmode.com/v1/title](https://api.watchmode.com/v1/title)
