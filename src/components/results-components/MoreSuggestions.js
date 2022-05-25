@@ -87,7 +87,7 @@ function MoreSuggestions() {
     const dataArray = [];
     // Slice the apiIds array to start at index 1. For each apiId fetch from the api
     state.apiIds.slice(1).map((id) => {
-      const apiKey = "zrVGwEWbj3fSgYJ0llyF8QZOAPbxLTXz1Dgiuj3a";
+      const apiKey = "Ww17mP11SMc8LyR688gQNhi1HzAtTbZNH7jwSnQX";
       const apiUrl = `https://api.watchmode.com/v1/title/${id}/details/?apiKey=${apiKey}&append_to_response=sources`;
       fetch(apiUrl)
         .then(function (response) {

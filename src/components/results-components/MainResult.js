@@ -95,7 +95,7 @@ function MainResult() {
    */
   function apiCall() {
     const mainResultId = state.apiIds[0];
-    const apiKey = "zrVGwEWbj3fSgYJ0llyF8QZOAPbxLTXz1Dgiuj3a";
+    const apiKey = "Ww17mP11SMc8LyR688gQNhi1HzAtTbZNH7jwSnQX";
     const apiUrl = `https://api.watchmode.com/v1/title/${mainResultId}/details/?apiKey=${apiKey}&append_to_response=sources`;
 
     fetch(apiUrl)
