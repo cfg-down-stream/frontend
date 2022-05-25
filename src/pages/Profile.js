@@ -12,38 +12,37 @@ function Profile() {
   const [state, dispatch] = useContext(Context);
   const [titleInfo, setTitleInfo] = useState({
     one: {
-      title: "",
-      id: "",
-      poster: "/",
-      watchLink: "/",
-      imdbId: "",
-    },
-    two: {
-      title: "",
-      id: "",
-      poster: "/",
-      watchLink: "/",
-      imdbId: "",
-    },
-    three: {
-      title: "",
+      title: "title",
       id: "id",
       poster: "/",
       watchLink: "/",
-      imdbId: "",
     },
-    four: {
-      title: "",
-      id: "",
+  
+    two: {
+      title: "title",
+      id: "id",
       poster: "/",
       watchLink: "/",
-      imdbId: "",
+    },
+    three: {
+      title: "title",
+      id: "id",
+      poster: "/",
+      watchLink: "/",
+    },
+    four: {
+      title: "title",
+      id: "id",
+      poster: "/",
+      watchLink: "/",
+
     },
   });
 
   //get request to API end point in the backend, send data to handleResponse func
   useEffect(() => {
     Axios.get(`http://localhost:3000/profile/${state.id}`).then((response) => {
+      console.log(response.data)
       const data = response.data;
       handleResponse(data);
     });
@@ -52,8 +51,8 @@ function Profile() {
   // Add data from GET api to array
   function handleResponse(data) {
     setTitleIds(
-      data.map((row) => {
-        return row.Title_id;
+      data.map((id) => {
+        return id.title_ids;
       })
     );
     console.log(titleIds);
@@ -69,6 +68,7 @@ function Profile() {
         poster: dataArray[0].poster,
         watchLink: dataArray[0].sources[0].web_url,
         imdbId: dataArray[0].imdb_id,
+        
       },
       two: {
         title: dataArray[1].title,
@@ -94,13 +94,13 @@ function Profile() {
     });
   }
 
-  function apiCall() {
+ async function apiCall() {
     const dataArray = [];
     titleIds.map((id) => {
       const apiKey = "NuY1wbXmkOwxSZp6anpgcJR6oCmxJ06tTrDwJpNN";
       const apiUrl = `https://api.watchmode.com/v1/title/${id}/details/?apiKey=${apiKey}&append_to_response=sources`;
       fetch(apiUrl)
-        .then((response) => {
+        .then(function (response) {
           return response.json();
         })
         .then((json) => {
@@ -116,11 +116,18 @@ function Profile() {
     });
   }
 
-  return (
-    <section className="favourite-section">
-      <h3 className="favourite-h3">{state.name}'s Favourites</h3>
-      <div className="favourite-container">
-        {/* Favourite One Begins*/}
+
+return (
+  <div className="container-fluid h-100">
+    <div className="row h-100 mx-4">
+      <div className="col d-flex flex-column p-0">
+        <Header />
+        {/* Main Gradient Section Begins */}
+        <main className="no-gradient h-100 d-flex flex-column justify-content-center align-items-center">
+        <h3 className="favourite-h3">{state.name}'s <span className="text-black"> Favourites </span></h3>
+            <section className="favourite-section">
+             <div className="favourite-container">
+             {/* Favourite One Begins*/}
         <div className="favourite">
           <a
             href={titleInfo.one.watchLink}
@@ -222,7 +229,12 @@ function Profile() {
         {/* Favourite FOUR Ends*/}
       </div>
     </section>
+        </main>
+        {/* Main Gradient Section Ends */}
+        <Footer />
+      </div>
+    </div>
+  </div>
   );
 }
-
 export default Profile;
