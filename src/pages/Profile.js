@@ -44,7 +44,7 @@ function Profile() {
   //get request to API end point in the backend, send data to handleResponse func
   useEffect(() => {
     Axios.get(`http://localhost:3000/profile/${state.id}`).then((response) => {
-      console.log(response.data)
+      console.log(response.data);
       const data = response.data;
       handleResponse(data);
     });
@@ -126,8 +126,10 @@ function Profile() {
           <main className="light-gradient  h-100 d-flex flex-column justify-content-center align-items-center">
             {/* Favourites Section Begins */}
             <section className="favourite-section">
-              <h3 className="favourite-h3">{state.name}'s 
-              <span className="text-blue"> Favourites </span></h3>
+              <h1 className="favourite-h2">
+                {state.name}'s
+                <span className="text-blue"> Favourites </span>
+              </h1>
               <div className="favourite-container">
                 {/* Favourite One Begins*/}
                 <div className="favourite">
