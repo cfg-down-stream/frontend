@@ -57,7 +57,7 @@ function Search() {
   2. Return 5 random show/film ids
   3. Call the updateGlobalState function */
   function apiCall(sourceIds, genreIds, mediaIds) {
-    const apiKey = "zrVGwEWbj3fSgYJ0llyF8QZOAPbxLTXz1Dgiuj3a";
+    const apiKey = "Ww17mP11SMc8LyR688gQNhi1HzAtTbZNH7jwSnQX";
     const apiUrl = `https://api.watchmode.com/v1/list-titles/?apiKey=${apiKey}&source_ids=${sourceIds}&types=${mediaIds}&genres=${genreIds}&page=1`;
 
     // Fetch api
@@ -71,7 +71,7 @@ function Search() {
       })
       .then((data) => {
         // If data object length is less than 4, go to error page
-        if (Object.keys(data).length < 5) {
+        if (Object.keys(data).length < 4) {
           // console.log(`Api Data Length: ${Object.keys(data).length}`);
           navigator("/Error");
         } else {
