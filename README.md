@@ -20,8 +20,7 @@ When using the search feature it suggested that you only select one streaming pl
 
 ### Home Page (Home.js)
 
-
-_image here_
+![List-titles endpoint example](/src/assets/homepage-example.png)
 
 - The first page that the user will see, consisting of the app logo and 3 options: Sign up, Start/Play, and Log In
 - Sign Up - Navigates the user to a page to create a user account.
@@ -33,8 +32,7 @@ _image here_
 
 ### Sign Up Page (SignUp.js)
 
-
-_image here_
+![List-titles endpoint example](/src/assets/sign-up-example.png)
 
 - Consists of a form for the user to enter their details and create an account.
 - An error is raised if the user’s enters a date of birth that makes them under 16 years old.
@@ -47,8 +45,7 @@ _image here_
 
 ### Log In Page (LogIn.js)
 
-
-_image here_
+![List-titles endpoint example](/src/assets/log-in-example.png)
 
 - Has a form to log into the app with the user’s account details.
 - An error is raised if the email and password combination entered doesn’t match any user accounts saved in the database.
@@ -60,14 +57,14 @@ _image here_
 
 ### Search Page (Search.js)
 
-
-_image here_
+![List-titles endpoint example](/src/assets/search-page-example.png)
 
 - The page heading has a personalised greeting for the user. Otherwise it will display “Hello Stranger”, if no one is logged in.
 - The user can select multiple options for: streaming platforms, genres and whether they want a tv show or film.
 - The Submit button takes the user's selections to run an api call to the WatchMode api. Then navigates to the Results page.
 
 ###### Search Page Error Message
+
 The "Submit" click function has to be called on the initial page render because for some reason the global states set on this page won't set on the first click. This means that our user would have to click "Submit" twice which isn't ideal.
 
 To get around this, an initial click function call happens on first render, which has no effect as no selection have been made. Then when the user clicks to submit their selections, the global states will set first time.
@@ -83,9 +80,9 @@ This is something that we would’ve worked to figure out by learning more about
 **Results.js** with child components: **MainResult.js** and **MoreSuggestions.js**
 <br />
 
-###### MainResult.js
+![List-titles endpoint example](/src/assets/results-page-example.png)
 
-_image here_
+###### MainResult.js
 
 - Has a heading that includes the platforms that the user selected and the show or film returned from their search.
 - There is a card that includes an image of the show result and some key details.
@@ -100,8 +97,6 @@ _image here_
 - <br />
 
 ###### MoreSuggestions.js
-
-_image here_
 
 - Below the main result section, there are 4 more suggestions of shows to watch.
 - - Each suggestion includes:
@@ -118,12 +113,12 @@ _image here_
 
 **Error.js**
 
-_image here_
+![List-titles endpoint example](/src/assets/error-page-example.png)
 
 - The error page would display when the search returns 0 results. However, from testing this out 0 results is difficult to achieve.
 - There is an “if, else” block in the Search page that states if the api returns back less than 5 title ids, then the user should be navigated to the Error page. This is as on the Results page, we display 5 results.
-<br />
-<br />
+  <br />
+  <br />
 
 ---
 
@@ -167,7 +162,6 @@ The MainResult component returns one title from the endpoint using the first ele
 
 <br />
 
-
 ### Profile.js
 
 src/pages/profile.js
@@ -198,8 +192,9 @@ The app.post("/signup") endpoint is used to sign up a new user to the downStream
 
 ### Post /login
 
-The app.post("/login) endpoint is used to sucessfully log a user in to the downStream application. It works by connecting to the login form in the frontend of the application and retreiving the inputs that the user has entered into the form. 
+The app.post("/login) endpoint is used to sucessfully log a user in to the downStream application. It works by connecting to the login form in the frontend of the application and retreiving the inputs that the user has entered into the form.
 After retreiving the user's email address and password from the form the endpoint then queries the database to check if the email address and password the user has entered matches an entry in the Users table. If the query can not find the email address or password in the Users table then a message is displayed to the user stating that the incorrect email or password has been entered. If the query does find the email and password in the Users table the user is then logged into the application.
 
 ### Get /profile
+
 The app.get("/profile) endpoint is used to retrieve the Title ids of titles that have been added by users to the favourites table. Using the post/results endpoint a user can add favourites to the Favourites table. Based on whatever user is currently logged in on the application, the app.get("/profile) endpoint can then make a query to the Favourites table, using the unique user id, to retrieve the Title ids of the user's favourites. These Title ids are then sent to the front end of the application where they are then used to retrieve information from the external API.
